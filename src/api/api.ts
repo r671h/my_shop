@@ -1,6 +1,5 @@
 import { Product } from "../types";
 import axios from "axios"
-import {BASE_API} from "../constants";
 
 const api = axios.create({
     baseURL: "https://fakestoreapi.com"
@@ -18,8 +17,8 @@ export async function getProducts(): Promise<Product[]> {
 
 export async function getProduct(id:number): Promise<Product | null> {
     try
-    {const res = await api.get(`/products/${id}`)
-    return res.data; 
+        {const res = await api.get(`/products/${id}`)
+        return res.data; 
     } catch(e: any) {
         console.error(`Error `,e.message)
         return null   }
