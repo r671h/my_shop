@@ -1,0 +1,44 @@
+@use "./_variables" as *;
+
+@mixin flex($direction: row, $justify: flex-start, $align: center, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  gap: $gap;
+}
+
+// Grid mixin
+@mixin grid($cols: 1, $gap: $spacing-lg) {
+  display: grid;
+  grid-template-columns: repeat($cols, 1fr);
+  gap: $gap;
+}
+
+// Responsive breakpoints
+@mixin sm {
+  @media (min-width: 640px) { @content; }
+}
+@mixin md {
+  @media (min-width: 768px) { @content; }
+}
+@mixin lg {
+  @media (min-width: 1024px) { @content; }
+}
+
+@mixin card-shadow {
+  box-shadow: 0 2px 8px $shadow;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px $shadow;
+  }
+}
+
+@mixin line-clamp($lines: 2) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
