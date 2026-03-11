@@ -2,6 +2,7 @@
 import "../src/styles/globals.scss"
 import Header from "@/src/components/Header/Header";
 import Footer from "@/src/components/Footer/Footer";
+import { CartProvider } from "@/src/context/CardContext";
 
 export default async function RootLayout({
   children,
@@ -11,9 +12,11 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Header/>
-        {children}
-        <Footer/>
+        <CartProvider>
+          <Header/>
+            {children}
+          <Footer/>
+        </CartProvider>
       </body>
     </html>
   );
