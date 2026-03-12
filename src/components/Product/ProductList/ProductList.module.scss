@@ -1,0 +1,25 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.layout {
+  @include flex(row, flex-start, flex-start, $spacing-xl);
+}
+
+.content {
+  flex: 1;
+}
+
+.search {
+  width: 100%;
+  padding: $spacing-md;
+  border: 2px solid #e5e7eb;
+  border-radius: $radius;
+  font-size: 15px;
+  margin-bottom: $spacing-lg;
+  outline: none;
+  transition: border-color 0.2s;
+
+  &:focus {
+    border-color: $primary;
+  }
+}

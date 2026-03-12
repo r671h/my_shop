@@ -1,7 +1,8 @@
 
 import { getProducts } from "../src/api/api";
-import ProductCard from "../src/components/ProductCard/ProductCard";
+import ProductCard from "../src/components/Product/ProductCard/ProductCard";
 import styles from "./page.module.scss";
+import ProductList from "@/src/components/Product/ProductList/ProductList";
 
 export default async function Home() {
   const products = await getProducts();
@@ -9,11 +10,7 @@ export default async function Home() {
   return (
     <main className={styles.main}>
       <h1 className={styles.title}>My Online Shop</h1>
-      <div className={styles.grid}>
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
-      </div>
+      <ProductList products={products} />
     </main>
   );
 }
