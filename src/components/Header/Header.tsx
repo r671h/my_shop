@@ -2,6 +2,7 @@
 import Link from "next/link";
 import styles from "./Header.module.scss";
 import { useCart } from "@/src/context/CardContext";
+import CartDropdown from "../CartDrowdown/CartDropdown";
 
 export default function Header() {
 
@@ -14,9 +15,7 @@ export default function Header() {
                 <Link href="/" className={styles.link}>Home</Link>
                 <Link href="/pages/about-us" className={styles.link}>About us</Link>
                 <Link href="/pages/products" className={styles.link}>Products</Link>
-                <Link href="/pages/cart" className={styles.link}>
-                {totalItems > 0 && <span className={styles.badge}>{totalItems}</span>}
-                </Link>
+                <CartDropdown/>
             </nav>
         </header>
     );
