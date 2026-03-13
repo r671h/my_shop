@@ -1,0 +1,71 @@
+@use "../../../../src/styles/variables" as *;
+@use "../../../../src/styles/mixins" as *;
+
+.main {
+  padding: $spacing-xl;
+  background-color: $bg-light;
+  min-height: 100vh;
+}
+
+.container {
+  @include flex(row, flex-start, flex-start, $spacing-xl);
+  background: white;
+  border-radius: $radius;
+  padding: $spacing-xl;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.image {
+  width: 300px;
+  height: 300px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.info {
+  @include flex(column, flex-start, flex-start, $spacing-md);
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: $text-dark;
+}
+
+.category {
+  font-size: 13px;
+  color: $text-gray;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.description {
+  font-size: 15px;
+  color: $text-gray;
+  line-height: 1.6;
+}
+
+.price {
+  font-size: 28px;
+  font-weight: 700;
+  color: $primary;
+}
+
+.button {
+  background-color: $primary;
+  color: white;
+  border: none;
+  border-radius: $spacing-sm;
+  padding: $spacing-md $spacing-xl;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: $primary-dark;
+  }
+}

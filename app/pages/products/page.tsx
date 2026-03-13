@@ -1,5 +1,5 @@
-import {getProducts} from '@/src/api/api'
-import ProductCard from '../../../src/components/Product/ProductCard/ProductCard'
+import {getProducts} from '@/app/src/api/api'
+import ProductCard from '../../src/components/Product/ProductCard/ProductCard'
 import styles from "./page.module.scss"
 
 export default async function Page(){
