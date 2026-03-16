@@ -1,0 +1,8 @@
+@use "../../src/styles/variables" as *;
+@use "../../src/styles/mixins" as *;
+
+.main {
+  padding: $spacing-xl;
+  background-color: $bg-light;
+  min-height: 100vh;
+}

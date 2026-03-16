@@ -10,7 +10,9 @@ type Props = {
 
 export default function ProductCard({ product }: { product: Product }) {
 
-  const { addToCart } = useCart();
+  const { addToCart, isInCart, updateQuantity, items } = useCart();
+  const cartItem = items.find(i => i.product.id === product.id);
+  const quantity = cartItem ? cartItem.quantity : 0;
 
   return (
     
@@ -26,7 +28,7 @@ export default function ProductCard({ product }: { product: Product }) {
         </Link>
         <button 
           className={styles.button}
-          onClick = {() => addToCart(product)}
+          onClick = {() => isInCart(product.id) ? updateQuantity(product.id, quantity+1) : addToCart(product)}
           >Add to Cart</button>
       </div>
     

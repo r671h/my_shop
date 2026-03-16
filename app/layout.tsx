@@ -3,6 +3,7 @@ import "./src/styles/globals.scss"
 import Header from "@/app/src/components/Header/Header";
 import Footer from "@/app/src/components/Footer/Footer";
 import { CartProvider } from "@/app/src/context/CardContext";
+import { AuthProvider } from "./src/context/AuthConext";
 
 export default async function RootLayout({
   children,
@@ -12,11 +13,13 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        <CartProvider>
-          <Header/>
-            {children}
-          <Footer/>
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <Header/>
+              {children}
+            <Footer/>
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );
