@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import styles from "./CartDropdown.module.scss";
-import { useCart } from "@/app/src/context/CardContext";
+import { useCart } from "@/app/src/context/CartContext";
 
 export default function CartDropdown() {
   const { items, totalItems, totalPrice, removeFromCart, updateQuantity } = useCart();

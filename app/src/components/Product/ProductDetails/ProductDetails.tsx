@@ -1,6 +1,6 @@
 "use client"
 
-import { useCart } from "@/app/src/context/CardContext";
+import { useCart } from "@/app/src/context/CartContext";
 import styles from "./ProductDetails.module.scss";
 import { Product } from "@/app/src/types";
 

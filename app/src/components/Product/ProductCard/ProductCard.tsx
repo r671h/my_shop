@@ -2,7 +2,7 @@
 import { Product } from "@/app/src/types";
 import styles from "./ProductCard.module.scss";
 import Link from "next/link";
-import { useCart } from "@/app/src/context/CardContext";
+import { useCart } from "@/app/src/context/CartContext";
 
 type Props = {
   product: Product;

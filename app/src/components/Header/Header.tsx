@@ -1,8 +1,8 @@
 "use client"
 import Link from "next/link";
 import styles from "./Header.module.scss";
-import { useCart } from "@/app/src/context/CardContext";
-import CartDropdown from "../CartDrowdown/CartDropdown";
+import { useCart } from "@/app/src/context/CartContext";
+import CartDropdown from "../CartDropdown/CartDropdown";
 import { useAuth } from "../../context/AuthConext";
 
 export default function Header() {
