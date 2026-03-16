@@ -11,6 +11,7 @@ type User = {
 type AuthContextType = {
     user: User | null;
     token: string | null;
+    loading: boolean;
     login: (user: User, token: string) => void;
     logOut: ()=> void;
     isLoggedIn: boolean;
@@ -21,6 +22,7 @@ const Authcontext = createContext<AuthContextType | null>(null);
 export function AuthProvider({ children }: { children: ReactNode}){
     const [user,setUser] = useState<User | null>(null);
     const [token,setToken] = useState<string | null>(null);
+    const [loading,setLoading] = useState(true);
 
     useEffect(()=>{
         const storedUser = localStorage.getItem("user");
@@ -28,15 +30,17 @@ export function AuthProvider({ children }: { children: ReactNode}){
 
         if(storedUser && storedToken){
             setUser(JSON.parse(storedUser));
-            setToken(storedToken);
+            setToken(storedToken.trim());
         }
+
+        setLoading(false);
     },[]);
 
     const login = (user: User, token: string) => {
         setUser(user);
-        setToken(token);
+        setToken(token.trim());
         localStorage.setItem("user",JSON.stringify(user));
-        localStorage.setItem("token",token);
+        localStorage.setItem("token",token.trim());
     }
 
     const logOut = () => {
@@ -47,7 +51,7 @@ export function AuthProvider({ children }: { children: ReactNode}){
     }
 
     return (
-        <Authcontext.Provider value={{user,token,login,logOut,isLoggedIn: !!user}}>
+        <Authcontext.Provider value={{user,token,login,loading,logOut,isLoggedIn: !!user}}>
             {children}
         </Authcontext.Provider>
     );

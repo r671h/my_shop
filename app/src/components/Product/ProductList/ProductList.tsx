@@ -31,7 +31,7 @@ export default function Productlist({products}: Props){
       <div className={styles.content}>
         <input
           type="text"
-          placeholder="Produkt suchen..."
+          placeholder="Search product..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className={styles.search}

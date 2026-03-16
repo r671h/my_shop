@@ -2,10 +2,8 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import { connectDB } from "./config/db";
-import { use } from "react";
 import authRoutes from "./routes/authRoute";
-import { listen } from "node:quic";
-import { log } from "node:console";
+import addressRoute from "./routes/addressRoute";
 
 dotenv.config();
 
@@ -16,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/addresses", addressRoute);
 
 connectDB();
 
