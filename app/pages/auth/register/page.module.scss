@@ -1,0 +1,100 @@
+@use "../../../src/styles/variables" as *;
+@use "../../../src/styles/mixins" as *;
+
+.main {
+  @include flex(row, center, center, 0);
+  min-height: 100vh;
+  background-color: $bg-light;
+}
+
+.card {
+  background: white;
+  border-radius: $radius;
+  padding: $spacing-xl;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 420px;
+}
+
+.title {
+  font-size: 26px;
+  font-weight: 700;
+  color: $text-dark;
+  margin-bottom: $spacing-lg;
+  text-align: center;
+}
+
+.error {
+  background: #fee2e2;
+  color: #dc2626;
+  padding: $spacing-sm $spacing-md;
+  border-radius: 8px;
+  font-size: 14px;
+  margin-bottom: $spacing-md;
+}
+
+.form {
+  @include flex(column, flex-start, stretch, $spacing-md);
+}
+
+.field {
+  @include flex(column, flex-start, stretch, 6px);
+
+  label {
+    font-size: 14px;
+    font-weight: 600;
+    color: $text-dark;
+  }
+
+  input {
+    padding: $spacing-sm $spacing-md;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &:focus {
+      border-color: $primary;
+    }
+  }
+}
+
+.button {
+  background-color: $primary;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: $spacing-md;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-top: $spacing-sm;
+
+  &:hover {
+    background-color: $primary-dark;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.link {
+  text-align: center;
+  margin-top: $spacing-md;
+  font-size: 14px;
+  color: $text-gray;
+
+  a {
+    color: $primary;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

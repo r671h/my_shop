@@ -1,5 +1,5 @@
-import { getProduct } from "@/src/api/api";
-import ProductDetails from "@/src/components/ProductDetails/ProductDetails";
+import { getProduct } from "@/app/src/api/api";
+import ProductDetails from "@/app/src/components/Product/ProductDetails/ProductDetails";
 import axios from "axios";
 
 type Props = {

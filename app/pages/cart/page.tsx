@@ -1,6 +1,6 @@
 "use client"
 
-import { useCart } from "@/src/context/CardContext"
+import { useCart } from "@/app/src/context/CartContext"
 import styles from "./page.module.scss";
 
 export default function CartPage() {

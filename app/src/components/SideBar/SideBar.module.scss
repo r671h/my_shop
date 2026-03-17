@@ -1,0 +1,53 @@
+@use "../../../src/styles/variables" as *;
+@use "../../../src/styles/mixins" as *;
+
+.sidebar {
+  width: 200px;
+  flex-shrink: 0;
+  background: white;
+  border-radius: $radius;
+  padding: $spacing-md;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 80px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 700;
+  color: $text-dark;
+  margin-bottom: $spacing-md;
+  padding-bottom: $spacing-sm;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.list {
+  list-style: none;
+  @include flex(column, flex-start, stretch, 4px);
+}
+
+.item {
+  padding: $spacing-sm $spacing-md;
+  border-radius: 8px;
+  font-size: 14px;
+  color: $text-gray;
+  cursor: pointer;
+  text-transform: capitalize;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: $light-blue;
+    color: $primary;
+  }
+}
+
+.active {
+  background-color: $primary;
+  color: white !important;
+  font-weight: 600;
+
+  &:hover {
+    background-color: $primary-dark !important;
+    color: white !important;
+  }
+}

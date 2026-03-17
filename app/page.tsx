@@ -1,8 +1,8 @@
 
-import { getProducts } from "../src/api/api";
-import ProductCard from "../src/components/Product/ProductCard/ProductCard";
+import { getProducts } from "./src/api/api";
+import ProductCard from "./src/components/Product/ProductCard/ProductCard";
 import styles from "./page.module.scss";
-import ProductList from "@/src/components/Product/ProductList/ProductList";
+import ProductList from "@/app/src/components/Product/ProductList/ProductList";
 
 export default async function Home() {
   const products = await getProducts();

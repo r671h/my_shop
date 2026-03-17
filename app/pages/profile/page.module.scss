@@ -1,0 +1,278 @@
+@use "../../src/styles/variables" as *;
+@use "../../src/styles/mixins" as *;
+
+.layout {
+  @include flex(row, flex-start, flex-start, $spacing-xl);
+  padding: $spacing-xl;
+  background-color: $bg-light;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: white;
+  border-radius: $radius;
+  padding: $spacing-md;
+  box-shadow: 0 2px 8px $shadow;
+  position: sticky;
+  top: 80px;
+}
+
+.avatar {
+  @include flex(column, center, center, $spacing-sm);
+  padding: $spacing-md 0;
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: $spacing-md;
+  text-align: center;
+
+  .avatarCircle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: $primary;
+    @include flex(row, center, center, 0);
+    font-size: 32px;
+    font-weight: 700;
+    color: white;
+    margin-bottom: $spacing-sm;
+  }
+
+  .avatarName {
+    font-size: 16px;
+    font-weight: 700;
+    color: $text-dark;
+  }
+
+  .avatarEmail {
+    font-size: 13px;
+    color: $text-gray;
+  }
+}
+
+.nav {
+  @include flex(column, flex-start, stretch, 4px);
+}
+
+.navItem {
+  @include flex(row, flex-start, center, $spacing-sm);
+  padding: $spacing-sm $spacing-md;
+  border-radius: 8px;
+  font-size: 14px;
+  color: $text-gray;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+
+  &:hover {
+    background-color: $light-blue;
+    color: $primary;
+  }
+}
+
+.navItemActive {
+  background-color: $primary !important;
+  color: white !important;
+  font-weight: 600;
+}
+
+.logoutBtn {
+  @include flex(row, flex-start, center, $spacing-sm);
+  padding: $spacing-sm $spacing-md;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #ef4444;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  background: none;
+  width: 100%;
+  margin-top: $spacing-md;
+  border-top: 1px solid #e5e7eb;
+  padding-top: $spacing-md;
+
+  &:hover {
+    background-color: #fee2e2;
+  }
+}
+
+.content {
+  flex: 1;
+  @include flex(column, flex-start, stretch, $spacing-lg);
+}
+
+.card {
+  background: white;
+  border-radius: $radius;
+  padding: $spacing-xl;
+  box-shadow: 0 2px 8px $shadow;
+}
+
+.cardTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: $text-dark;
+  margin-bottom: $spacing-lg;
+  padding-bottom: $spacing-sm;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.subTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: $text-dark;
+  margin-bottom: $spacing-md;
+  margin-top: $spacing-lg;
+}
+
+.form {
+  @include flex(column, flex-start, stretch, $spacing-md);
+}
+
+.formRow {
+  @include flex(row, flex-start, flex-start, $spacing-md);
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.formGroup {
+  @include flex(column, flex-start, stretch, 6px);
+  flex: 1;
+
+  label {
+    font-size: 13px;
+    font-weight: 600;
+    color: $text-gray;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  input {
+    padding: $spacing-sm $spacing-md;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+    color: $text-dark;
+
+    &:focus {
+      border-color: $primary;
+    }
+  }
+}
+
+.saveBtn {
+  background-color: $primary;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: $spacing-sm $spacing-xl;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  align-self: flex-start;
+  margin-top: $spacing-sm;
+
+  &:hover {
+    background-color: $primary-dark;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.addressList {
+  @include flex(column, flex-start, stretch, $spacing-sm);
+  margin-bottom: $spacing-lg;
+}
+
+.addressItem {
+  @include flex(row, space-between, center, $spacing-md);
+  padding: $spacing-md;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 2px 8px $shadow;
+  }
+}
+
+.addressInfo {
+  @include flex(column, flex-start, flex-start, 4px);
+
+  p {
+    font-size: 14px;
+    color: $text-dark;
+    margin: 0;
+  }
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  flex-shrink: 0;
+
+  &:hover {
+    background-color: #fee2e2;
+  }
+}
+
+.empty {
+  text-align: center;
+  color: $text-gray;
+  font-size: 14px;
+  padding: $spacing-md 0;
+}
+
+.orderList {
+  @include flex(column, flex-start, stretch, $spacing-md);
+}
+
+.orderItem {
+  @include flex(row, space-between, center, $spacing-md);
+  padding: $spacing-md;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 2px 8px $shadow;
+  }
+}
+
+.orderInfo {
+  @include flex(column, flex-start, flex-start, 4px);
+
+  .orderDate {
+    font-size: 13px;
+    color: $text-gray;
+  }
+
+  .orderItems {
+    font-size: 14px;
+    color: $text-dark;
+    font-weight: 500;
+  }
+}
+
+.orderTotal {
+  font-size: 18px;
+  font-weight: 700;
+  color: $primary;
+}
