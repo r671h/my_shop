@@ -27,7 +27,7 @@ type CartContextType = {
 const CartContext = createContext<CartContextType | null>(null);
 
 const api = axios.create({
-    baseURL: "http://localhost:5000/api"
+    baseURL: process.env.NEXT_PUBLIC_API_URL
 })
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
