@@ -1,11 +1,16 @@
 "use client"
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { Product } from "../types";
+import axios from "axios";
+import { useAuth } from "./AuthConext";
 
 type CartItem = {
-  product: Product
-  quantity: number
+    productId: number;
+    title: string;
+    price: number;
+    image: string;
+    quantity: number;
 };
 
 type CartContextType = {
@@ -13,53 +18,107 @@ type CartContextType = {
   addToCart: (product: Product) => void;
   removeFromCart: (productId: number) => void;
   updateQuantity: (productId: number, quantity: number) => void;
-  isInCart: (productId: number) => boolean;
+  clearCart: () => void;
+  isInCart: (id: number) => boolean;
   totalPrice: number;
   totalItems: number;
 };
 
 const CartContext = createContext<CartContextType | null>(null);
 
+const api = axios.create({
+    baseURL: "http://localhost:5000/api"
+})
+
 export function CartProvider({ children }: { children: React.ReactNode }) {
     const [items,setItems] = useState<CartItem[]>([]);
+    const {token,loading} = useAuth();
 
-    const addToCart = (product: Product) => {
-        setItems((prev) => {
-            const existing = prev.find(i => i.product.id === product.id);
-            if(existing) {
-                return prev.map((i)=> i.product.id === product.id
-                ? {...i, quanity: i.quantity + 1}
-                : i
-                );
-            }
-            return [...prev, { product, quantity: 1 }]
-        });
-    };
+    useEffect(() => {
+        if(!loading && token){
+            fetchCart();
+        }
+        if(!loading && !token){
+            setItems([]);
+        }
+    },[token,loading]);
 
-    const removeFromCart = (id: number) => {
-        setItems((prev) => prev.filter(i => i.product.id !== id));
-    };
-
-    const updateQuantity = (id: number, quantity: number) => {
-        setItems((prev) => 
-            prev.map((i) => 
-                i.product.id === id ? 
-                quantity >= 0 ?   
-                { ...i, quantity } 
-                : i : i
-            )
-        );
-    };
-
-    const isInCart = (id:number) => {
-        return items.some(i => i.product.id === id);
+    async function fetchCart() {
+        try {
+            const res = await api.get("/cart",{
+            headers:{ Authorization: `Bearer ${token}`}
+            });
+            setItems(res.data.items || []);
+        }
+        catch (error: any) {
+            console.error("Error fetching cart", error.message);
+        }
     }
 
-    const totalPrice = items.reduce((sum, i)=> sum + i.product.price * i.quantity, 0);
+    const addToCart = async (product: Product) => {
+        try{
+            const res = await api.post("/cart", {
+                productId: product.id,
+                title: product.title,
+                price: product.price,
+                image: product.image
+            },{
+                headers:{ Authorization: `Bearer ${token}`}
+            });
+            
+            setItems(res.data.items || []);
+        }
+        catch (error: any) {
+            console.error("Error adding to cart", error.message);
+        }
+    };
+
+    const removeFromCart = async (productId: number) => {
+        try {
+            
+            const res = await api.delete(`/cart/${productId}`, {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            setItems(res.data.items || []);
+        }
+        catch (error: any) {
+            console.error("Error removing from cart", error.message);
+        }
+    };
+
+    const updateQuantity = async (productId: number, quantity: number) => {
+        try {
+            const res = await api.put(`/cart/${productId}`, { quantity }, {
+                headers: { Authorization: `Bearer ${token}`}
+            });
+            setItems(res.data.items || [])
+        }
+        catch (error: any) {            
+            console.error("Error updating cart", error.message);
+        }
+    };
+
+    const clearCart = async () => {
+        try{
+            const res = await api.delete("/cart/clear",{
+                headers: { Authorization : `Bearer ${token}`}
+            });
+            setItems(res.data.items || []);
+        }
+        catch (error: any) {
+            console.error("Error clearing cart", error.message);
+        }
+    }
+
+     const isInCart = (id:number) => {
+        return items.some(i => i.productId === id);
+    }
+
+    const totalPrice = items.reduce((sum, i)=> sum + i.price * i.quantity, 0);
     const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
 
     return (
-        <CartContext.Provider value={{ items, addToCart, removeFromCart, updateQuantity,isInCart, totalPrice, totalItems}}>
+        <CartContext.Provider value={{ items, addToCart, removeFromCart, updateQuantity, clearCart, isInCart, totalPrice, totalItems}}>
             {children}
         </CartContext.Provider>
     );

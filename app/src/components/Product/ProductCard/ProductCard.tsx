@@ -11,7 +11,7 @@ type Props = {
 export default function ProductCard({ product }: { product: Product }) {
 
   const { addToCart, isInCart, updateQuantity, items } = useCart();
-  const cartItem = items.find(i => i.product.id === product.id);
+  const cartItem = items.find(i => i.productId === product.id);
   const quantity = cartItem ? cartItem.quantity : 0;
 
   return (

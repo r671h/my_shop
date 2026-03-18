@@ -19,25 +19,25 @@ export default function CartPage() {
     <main className={styles.main}>
       <h1 className={styles.title}>Cart ({totalItems} Product)</h1>
       <div className={styles.list}>
-        {items.map(({ product, quantity }) => (
-          <div key={product.id} className={styles.item}>
-            <img src={product.image} alt={product.title} className={styles.image} />
+        {items.map(({ productId, title, image, price, quantity }) => (
+          <div key={productId} className={styles.item}>
+            <img src={image} alt={title} className={styles.image} />
             <div className={styles.info}>
-              <h2 className={styles.name}>{product.title}</h2>
-              <p className={styles.price}>${product.price}</p>
+              <h2 className={styles.name}>{title}</h2>
+              <p className={styles.price}>${price}</p>
               <p className={styles.quantity}>Quantity: {quantity}</p>
 
             </div>
             <button
               className={styles.remove}
-              onClick={() => removeFromCart(product.id)}
+              onClick={() => removeFromCart(productId)}
             >
               Delete
             </button>
             <div className={styles.quantityControl}>
-                <button onClick={() => updateQuantity(product.id, quantity - 1)}>−</button>
+                <button onClick={() => updateQuantity(productId, quantity - 1)}>−</button>
                 <span>{quantity}</span>
-                <button onClick={() => updateQuantity(product.id, quantity + 1)}>+</button>
+                <button onClick={() => updateQuantity(productId, quantity + 1)}>+</button>
             </div>
           </div>
         ))}
