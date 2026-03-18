@@ -19,6 +19,7 @@ type CartContextType = {
   removeFromCart: (productId: number) => void;
   updateQuantity: (productId: number, quantity: number) => void;
   clearCart: () => void;
+  isInCart: (id: number) => boolean;
   totalPrice: number;
   totalItems: number;
 };
@@ -61,6 +62,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             },{
                 headers:{ Authorization: `Bearer ${token}`}
             });
+            
             setItems(res.data.items || []);
         }
         catch (error: any) {
@@ -70,6 +72,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
     const removeFromCart = async (productId: number) => {
         try {
+            
             const res = await api.delete(`/cart/${productId}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -104,11 +107,15 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         }
     }
 
+     const isInCart = (id:number) => {
+        return items.some(i => i.productId === id);
+    }
+
     const totalPrice = items.reduce((sum, i)=> sum + i.price * i.quantity, 0);
     const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
 
     return (
-        <CartContext.Provider value={{ items, addToCart, removeFromCart, updateQuantity, clearCart, totalPrice, totalItems}}>
+        <CartContext.Provider value={{ items, addToCart, removeFromCart, updateQuantity, clearCart, isInCart, totalPrice, totalItems}}>
             {children}
         </CartContext.Provider>
     );

@@ -1,4 +1,6 @@
 import { Schema, model,models } from 'mongoose';
+import { Cart } from './Cart';
+import { CartSchema } from './Cart';
 
 const UserSchema = new Schema({
     name: { type: String, required: true },
@@ -18,7 +20,8 @@ const UserSchema = new Schema({
       total: Number,
       createdAt: { type: Date, default: Date.now }
     }
-  ]
+  ],
+  cart: [CartSchema]
 }, {timestamps: true});
 
 export const User = models.User || model('User', UserSchema);
