@@ -7,7 +7,7 @@ import Link from "next/dist/client/link";
 import styles from "./page.module.scss";
 
 
-export default function RegisterPage() {
+export default async function RegisterPage() {
 
     const [form,setForm] = useState({
         name: "",
@@ -17,6 +17,10 @@ export default function RegisterPage() {
     const [error,setError] = useState("");
     const [loading,setLoading] = useState(false);
     const router = useRouter();
+
+    const api = await axios.create({
+          baseURL:process.env.NEXT_PUBLIC_API_URL
+        })
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm({...form, [e.target.name]: e.target.value});
@@ -28,7 +32,7 @@ export default function RegisterPage() {
         setError("");
 
         try{
-            const res = await axios.post("http://localhost:5000/api/auth/register", form);
+            const res = await api.post("/api/auth/register", form);
             localStorage.setItem("token",res.data.token);
             localStorage.setItem("user",JSON.stringify(res.data.user));
             router.push("/");

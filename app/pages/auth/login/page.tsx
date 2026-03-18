@@ -28,8 +28,12 @@ export default function LoginPage() {
         setLoading(true);
         setError("");
 
+        const api = await axios.create({
+          baseURL:process.env.NEXT_PUBLIC_API_URL
+        })
+
         try{
-            const res = await axios.post("http://localhost:5000/api/auth/login", form);
+            const res = await api.post("/api/auth/login", form);
             login(res.data.user,res.data.token);
             router.push("/");
         }
