@@ -35,8 +35,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const {token,loading} = useAuth();
 
     useEffect(() => {
-        if(!loading &&token){
+        if(!loading && token){
             fetchCart();
+        }
+        if(!loading && !token){
+            setItems([]);
         }
     },[token,loading]);
 
