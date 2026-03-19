@@ -14,11 +14,14 @@
     padding: $spacing-sm $spacing-md;
   }
 
-  .logo {
+  @include md {
+    .logo {
     font-size: 22px;
     font-weight: 700;
     color: white;
   }
+  }
+  
 
   .nav {
   @include flex(row, flex-end, center, $spacing-lg);
