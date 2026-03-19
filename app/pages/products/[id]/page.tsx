@@ -11,9 +11,7 @@ type Props = {
   };
 };
 
-export default async function ProductPage({ params }: Props) {
-  const { id } = await params;
-  
+export default function ProductPage({ params }: Props) {
   const {product,loading,error} = useProduct(Number(params.id))
 
   if (loading) return <p>Loading...</p>;
