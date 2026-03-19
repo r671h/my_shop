@@ -11,18 +11,16 @@ export function useProduct(id : Number){
         if(!id){
             return;
         }
-         getProduct(id)
-    .then((data) => {
-      console.log("Product data:", data); // ← add this
-      setProduct(data);
-    })
-    .catch((e) => {
-      console.error("Error:", e.message);
-      setError(e.message);
-    })
-    .finally(() => {
-      setLoading(false);
-    });
+        getProduct(id)
+        .then((data)=>{
+            setProduct(data);
+        })
+        .catch((e)=>{
+            setError(e.message);
+        })
+        .finally(() => {
+            setLoading(false);
+        })
     },[id])
 
     return {product,loading,error};

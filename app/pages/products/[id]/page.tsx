@@ -12,6 +12,8 @@ type Props = {
 };
 
 export default function ProductPage({ params }: Props) {
+  console.log("params:", params); 
+  console.log("id:", params.id); 
   const {product,loading,error} = useProduct(Number(params.id))
 
   if (loading) return <p>Loading...</p>;
