@@ -3,24 +3,16 @@ import { Product } from "@/app/src/types";
 import styles from "./ProductCard.module.scss";
 import Link from "next/link";
 import { useCart } from "@/app/src/context/CartContext";
-import { useEffect, useState } from "react";
-import { getProduct } from "@/app/src/api/api";
-import { useProduct } from "@/app/src/hooks/useProduct";
 
 type Props = {
-  id: Number;
+  product: Product;
 };
 
-export default function ProductCard({id} : Props) {
+export default function ProductCard({product} : Props) {
 
   const { addToCart, isInCart, updateQuantity, items } = useCart();
   const cartItem = items.find(i => i.productId === product!.id);
   const quantity = cartItem ? cartItem.quantity : 0;
-
-  const {product,loading,error} = useProduct({id});
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>
 
   return (
     
