@@ -16,9 +16,11 @@ export default function CartDropdown() {
 
       {/* Desktop — full dropdown */}
       <div className={styles.desktopWrapper}>
-        <span className={styles.cartBtn}>
-          Cart {totalItems > 0 && <span className={styles.badge}>{totalItems}</span>}
-        </span>
+        <Link href="/pages/cart">
+          <span className={styles.cartBtn}>
+            Cart {totalItems > 0 && <span className={styles.badge}>{totalItems}</span>}
+          </span>
+        </Link>
 
         <div className={styles.dropdown}>
           <p className={styles.title}>Cart</p>
