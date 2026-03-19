@@ -14,7 +14,7 @@ export default function ProductGrid({ products }: Props) {
   return (
     <div className={styles.grid}>
       {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard key={product.id} product= {product} />
       ))}
     </div>
   );

@@ -4,21 +4,13 @@ import { useState } from "react";
 import ProductGrid from "../ProductGrid/ProductGrid";
 import Sidebar from "../../SideBar/SideBar";
 import styles from "./ProductList.module.scss";
-import { useEffect } from "react";
-import { getProducts } from "@/app/src/api/api";
+import { useProducts } from "@/app/src/hooks/useProducts";
 
 export default function Productlist(){
-    const [products, setProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
-  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    getProducts().then((data) => {
-      setProducts(data);
-      setLoading(false);
-    });
-  }, []);
+  const {products, loading} = useProducts();
 
   const categories = ["all", ...Array.from(new Set(products.map((p) => p.category)))];
 

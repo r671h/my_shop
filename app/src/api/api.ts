@@ -15,7 +15,7 @@ export async function getProducts(): Promise<Product[]> {
     }
 }
 
-export async function getProduct(id:number): Promise<Product | null> {
+export async function getProduct(id:Number): Promise<Product | null> {
     try
         {const res = await api.get(`/products/${id}`)
         return res.data; 

@@ -29,7 +29,7 @@ export default function Addresses({token}:{token: string}) {
             setAddresses(res.data);
         }
         catch (error: any) {
-            console.error("Error fetching addresses:", error.message)
+            console.error("Error fetching addresses:", error.message);
         }
     };
 
