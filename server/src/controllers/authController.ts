@@ -27,7 +27,8 @@ export async function login(req: Request, res: Response) {
   try {
     await connectDB();
     const { email, password } = req.body;
-
+    console.log(email);
+    
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ error: "Password or email is incorrect" });
