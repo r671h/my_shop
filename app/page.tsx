@@ -7,6 +7,11 @@ import ProductList from "@/app/src/components/Product/ProductList/ProductList";
 export default async function Home() {
   const products = await getProducts();
 
+  if(!products){
+    console.log("error fetching products");
+  }
+  
+
   return (
     <main className={styles.main}>
       <h1 className={styles.title}>My Online Shop</h1>
