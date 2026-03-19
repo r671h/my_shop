@@ -10,6 +10,11 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   position: sticky;
   top: 80px;
+
+  @media (max-width: 768px) {
+    width: 100%; 
+    position: static; 
+  }
 }
 
 .title {
@@ -24,6 +29,11 @@
 .list {
   list-style: none;
   @include flex(column, flex-start, stretch, 4px);
+
+   @media (max-width: 768px) {
+    @include flex(row, flex-start, center, $spacing-sm);
+    flex-wrap: wrap; 
+  }
 }
 
 .item {
@@ -38,6 +48,10 @@
   &:hover {
     background-color: $light-blue;
     color: $primary;
+  }
+
+  @media (max-width: 768px) {
+    white-space: nowrap; // ← prevent text wrapping
   }
 }
 

@@ -10,11 +10,12 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
-  gap: $spacing-lg;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
 
   @include sm {
     grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-lg;
   }
 
   @include md {
@@ -24,4 +25,12 @@
   @include lg {
     grid-template-columns: repeat(4, 1fr);
   }
+}
+
+.empty {
+  text-align: center;
+  color: $text-gray;
+  font-size: 16px;
+  margin-top: $spacing-xl;
+  grid-column: 1 / -1; 
 }
