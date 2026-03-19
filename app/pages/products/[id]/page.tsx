@@ -1,3 +1,5 @@
+"use client";
+
 import { getProduct } from "@/app/src/api/api";
 import ProductDetails from "@/app/src/components/Product/ProductDetails/ProductDetails";
 import { useProduct } from "@/app/src/hooks/useProduct";
