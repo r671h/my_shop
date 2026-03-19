@@ -33,7 +33,7 @@ export default function LoginPage() {
         })
 
         try{
-            const res = await api.post("/api/auth/login", form);
+            const res = await api.post("/auth/login", form);
             login(res.data.user,res.data.token);
             router.push("/");
         }
