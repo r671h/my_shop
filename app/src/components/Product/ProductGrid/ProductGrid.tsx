@@ -11,10 +11,11 @@ export default function ProductGrid({ products }: Props) {
     return <p className={styles.empty}>No products found.</p>;
   }
 
+
   return (
     <div className={styles.grid}>
       {products.map((product) => (
-        <ProductCard key={product.id} product= {product} />
+        <ProductCard key={product.id} id= {Number(product.id)} />
       ))}
     </div>
   );
