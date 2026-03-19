@@ -21,29 +21,28 @@
   }
 
   .nav {
-    @include flex(row, flex-end, center, $spacing-lg);
+  @include flex(row, flex-end, center, $spacing-lg);
 
-    @media (max-width: 640px) {
-    gap: $spacing-sm;
+  @media (max-width: 640px) {
+    gap: 8px;
   }
-  }
+}
 
-  .link {
-    color: white;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 500;
-    transition: opacity 0.2s;
+.link {
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: opacity 0.2s;
 
-     @media (max-width: 640px) {
-    font-size: 13px;
-    }
-
-    &:hover {
-      opacity: 0.75;
-    }
+  @media (max-width: 640px) {
+    font-size: 12px;
   }
 
+  &:hover {
+    opacity: 0.75;
+  }
+}
   .badge {
   background: white;
   color: $primary;
