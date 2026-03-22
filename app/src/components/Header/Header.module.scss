@@ -14,12 +14,14 @@
     padding: $spacing-sm $spacing-md;
   }
 
-  @include md {
-    .logo {
+  .logo {
     font-size: 22px;
     font-weight: 700;
     color: white;
-  }
+
+    @media (max-width: 640px) {
+      display: none; // ← hide on mobile
+    }
   }
   
 
