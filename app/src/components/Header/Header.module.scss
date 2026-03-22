@@ -20,7 +20,8 @@
     color: white;
 
     @media (max-width: 640px) {
-      display: none; // ← hide on mobile
+      justify-content: flex-end;
+      display: none;
     }
   }
   
