@@ -4,24 +4,25 @@ import { useState } from "react";
 import ProductGrid from "../ProductGrid/ProductGrid";
 import Sidebar from "../../SideBar/SideBar";
 import styles from "./ProductList.module.scss";
+import { useProducts } from "@/app/src/hooks/useProducts";
 
-type Props = {
-    products: Product[];
-}
+export default function Productlist(){
+  const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState("all");
 
-export default function Productlist({products}: Props){
-    const [search,setSearch] = useState("");
-    const [activeCategory, setActiveCategory] = useState("all");
+  const {products, loading} = useProducts();
 
-    const categories = ["all",...Array.from(new Set(products.map(p => p.category)))];
+  const categories = ["all", ...Array.from(new Set(products.map((p) => p.category)))];
 
-    const filtered = products.filter((p) =>{
-        const matchesSearch = p.title.toLocaleLowerCase().includes(search.toLocaleLowerCase());
-        const matchesCategory = activeCategory === "all" || p.category === activeCategory;
-        return matchesSearch && matchesCategory;
-    });
+  const filtered = products.filter((p) => {
+    const matchesSearch = p.title.toLowerCase().includes(search.toLowerCase());
+    const matchesCategory = activeCategory === "all" || p.category === activeCategory;
+    return matchesSearch && matchesCategory;
+  });
 
-     return (
+  if (loading) return <p>Loading products...</p>;
+
+  return (
     <div className={styles.layout}>
       <Sidebar
         categories={categories}

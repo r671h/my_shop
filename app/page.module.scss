@@ -4,7 +4,11 @@
 .main {
   padding: $spacing-xl;
   background-color: $bg-light;
-  min-height: 100vh;
+  min-height: calc(100vh - 60px);
+
+  @media (max-width: 640px) {
+    padding: $spacing-md;
+  }
 }
 
 .title {
@@ -12,6 +16,10 @@
   font-weight: 700;
   color: $text-dark;
   margin-bottom: $spacing-lg;
+
+  @media (max-width: 640px) {
+    font-size: 22px; 
+  }
 }
 
 .grid {

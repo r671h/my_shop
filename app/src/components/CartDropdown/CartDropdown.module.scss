@@ -1,11 +1,35 @@
-@use "../../../src/styles/variables" as *;
-@use "../../../src/styles/mixins" as *;
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
 
 .wrapper {
   position: relative;
+}
 
-  &:hover .dropdown {
-    display: flex;
+// Mobile — only show link
+.mobileLink {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+
+  @include md {
+    display: none; // ← hide on desktop
+  }
+}
+
+.desktopWrapper {
+  display: none; 
+
+  @include md {
+    display: block;
+    position: relative;
+
+    &:hover .dropdown {
+      display: flex;
+    }
   }
 }
 
@@ -93,6 +117,47 @@
   }
 }
 
+.quantityControl {
+  @include flex(row, center, center, 4px);
+
+  button {
+    background: $primary;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    font-size: 16px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $primary-dark;
+    }
+  }
+
+  span {
+    font-size: 14px;
+    font-weight: 700;
+    color: $text-dark;
+    min-width: 20px;
+    text-align: center;
+  }
+}
+
+.removeBtn {
+  background: none;
+  border: none;
+  color: #ef4444;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+
+  &:hover {
+    background-color: #fee2e2;
+  }
+}
+
 .total {
   border-top: 1px solid #e5e7eb;
   padding-top: $spacing-sm;
@@ -119,46 +184,5 @@
 
   &:hover {
     background-color: $primary-dark;
-  }
-}
-.removeBtn {
-  background: none;
-  border: none;
-  color: #ef4444;
-  font-size: 16px;
-  cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-  flex-shrink: 0;
-
-  &:hover {
-    background-color: #fee2e2;
-  }
-} .quantityControl {
-  @include flex(row, center, center, 4px);
-
-  button {
-    background: $primary;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    width: 24px;
-    height: 24px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.2s;
-
-    &:hover {
-      background-color: $primary-dark;
-    }
-  }
-
-  span {
-    font-size: 14px;
-    font-weight: 700;
-    color: $text-dark;
-    min-width: 20px;
-    text-align: center;
   }
 }

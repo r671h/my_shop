@@ -10,28 +10,45 @@
   z-index: 100;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 
+  @media (max-width: 640px) {
+    justify-content: flex-end;
+    padding: $spacing-sm $spacing-md;
+  }
+
   .logo {
     font-size: 22px;
     font-weight: 700;
     color: white;
-  }
 
-  .nav {
-    @include flex(row, flex-end, center, $spacing-lg);
-  }
-
-  .link {
-    color: white;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 500;
-    transition: opacity 0.2s;
-
-    &:hover {
-      opacity: 0.75;
+    @media (max-width: 640px) {
+      display: none;
     }
   }
+  
 
+  .nav {
+  @include flex(row, flex-end, center, $spacing-lg);
+
+  @media (max-width: 640px) {
+    gap: 8px;
+  }
+}
+
+.link {
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: opacity 0.2s;
+
+  @media (max-width: 640px) {
+    font-size: 12px;
+  }
+
+  &:hover {
+    opacity: 0.75;
+  }
+}
   .badge {
   background: white;
   color: $primary;

@@ -11,7 +11,7 @@ type Props = {
 export default function SideBar({categories, activeCategory, onSelect}: Props) {
     return (
     <aside className={styles.sidebar}>
-      <h2 className={styles.title}>Kategorien</h2>
+      <h2 className={styles.title}>Category</h2>
       <ul className={styles.list}>
         {categories.map((category) => (
           <li
