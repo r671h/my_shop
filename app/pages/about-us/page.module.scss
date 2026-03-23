@@ -66,6 +66,21 @@
   flex-wrap: wrap;
 }
  
+a.tag {
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+ 
+  &:hover {
+    background: var(--color-accent, #3b82f6);
+    color: #fff;
+    transform: translateY(-2px);
+  }
+ 
+  &:active {
+    transform: translateY(0);
+  }
+}
+ 
 .socialLink {
   display: inline-flex;
   align-items: center;

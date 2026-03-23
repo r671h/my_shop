@@ -1,6 +1,18 @@
 import styles from "./page.module.scss";
 
 export default function AboutPage() {
+
+  const techStack = [
+    { label: "Next.js",     href: "https://nextjs.org/docs" },
+    { label: "TypeScript",  href: "https://www.typescriptlang.org/docs" },
+    { label: "SCSS",        href: "https://sass-lang.com/documentation" },
+    { label: "Node.js",     href: "https://nodejs.org/en/docs" },
+    { label: "Express",     href: "https://expressjs.com/en/4x/api.html" },
+    { label: "MongoDB",     href: "https://www.mongodb.com/docs" },
+    { label: "Vercel",      href: "https://vercel.com/docs" },
+    { label: "Render",      href: "https://docs.render.com" },
+  ];
+
   return (
     <main className={styles.main}>
 
@@ -20,14 +32,16 @@ export default function AboutPage() {
       <section className={styles.section}>
         <h2 className={styles.subtitle}>Tech Stack</h2>
         <div className={styles.stack}>
-          <span className={styles.tag}>Next.js</span>
-          <span className={styles.tag}>TypeScript</span>
-          <span className={styles.tag}>SCSS</span>
-          <span className={styles.tag}>Node.js</span>
-          <span className={styles.tag}>Express</span>
-          <span className={styles.tag}>MongoDB</span>
-          <span className={styles.tag}>Vercel</span>
-          <span className={styles.tag}>Render</span>
+          {techStack.map(({ label,href}) => (
+            <a
+            key={label}
+            href={href}
+            target="_blank"
+            className={styles.tag}
+            >
+              {label}
+            </a>
+          ))}
         </div>
       </section>
 
@@ -55,7 +69,7 @@ export default function AboutPage() {
           </a>
  
           <a
-            href="www.linkedin.com/in/ruslan-hryshchenko"
+            href="http://www.linkedin.com/in/ruslan-hryshchenko"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.socialLink}
