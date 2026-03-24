@@ -87,7 +87,7 @@ export default function Addresses({token}:{token: string}) {
         </div>
         <button
           className={styles.saveBtn}
-          onClick={() => addAddress}
+          onClick={addAddress}
           disabled={loading}
         >
           {loading ? "Saving..." : "Save Address"}
