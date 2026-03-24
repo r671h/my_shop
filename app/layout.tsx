@@ -4,6 +4,7 @@ import Header from "@/app/src/components/Header/Header";
 import Footer from "@/app/src/components/Footer/Footer";
 import { CartProvider } from "@/app/src/context/CartContext";
 import { AuthProvider } from "./src/context/AuthConext";
+import { AddressProvider } from "./src/context/AddressesContext";
 
 export default async function RootLayout({
   children,
@@ -13,13 +14,15 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AuthProvider>
-          <CartProvider>
-            <Header/>
-              {children}
-            <Footer/>
-          </CartProvider>
-        </AuthProvider>
+        <AddressProvider>
+          <AuthProvider>
+            <CartProvider>
+              <Header/>
+                {children}
+              <Footer/>
+            </CartProvider>
+          </AuthProvider>
+        </AddressProvider>
       </body>
     </html>
   );

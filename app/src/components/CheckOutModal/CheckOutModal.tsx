@@ -1,16 +1,14 @@
 "use client";
 
 import { useState } from "react";
-import styles from "./CheckOutModal.module.scss";
-import Addresses from "../Profile/Addresses/Addresses";
-import { useAuth } from "../../context/AuthConext";
+import styles from "./CheckoutModal.module.scss";
 
-interface CartItem {
-  productId: number;
-  title: string;
-  price: number;
-  image: string,
-  quantity: number;
+type CartItem = {
+    productId: number,
+    title: string,
+    price: number,
+    image: string,
+    quantity: number
 }
 
 interface CheckoutModalProps {
@@ -30,7 +28,7 @@ export default function CheckoutModal({
 }: CheckoutModalProps) {
   const [step, setStep] = useState<Step>("delivery");
   const [submitted, setSubmitted] = useState(false);
-  const {token} = useAuth();
+
   const [delivery, setDelivery] = useState({
     fullName: "",
     street: "",
@@ -158,7 +156,65 @@ export default function CheckoutModal({
             <div className={styles.form}>
               <h3 className={styles.sectionTitle}>Delivery address</h3>
               <div className={styles.field}>
-                <Addresses token={token || ""}></Addresses>
+                <label>Full name</label>
+                <input
+                  type="text"
+                  placeholder="John Doe"
+                  value={delivery.fullName}
+                  onChange={(e) => setDelivery({ ...delivery, fullName: e.target.value })}
+                />
+                {errors.fullName && <span className={styles.error}>{errors.fullName}</span>}
+              </div>
+              <div className={styles.field}>
+                <label>Street address</label>
+                <input
+                  type="text"
+                  placeholder="123 Main St, Apt 4"
+                  value={delivery.street}
+                  onChange={(e) => setDelivery({ ...delivery, street: e.target.value })}
+                />
+                {errors.street && <span className={styles.error}>{errors.street}</span>}
+              </div>
+              <div className={styles.row}>
+                <div className={styles.field}>
+                  <label>City</label>
+                  <input
+                    type="text"
+                    placeholder="Berlin"
+                    value={delivery.city}
+                    onChange={(e) => setDelivery({ ...delivery, city: e.target.value })}
+                  />
+                  {errors.city && <span className={styles.error}>{errors.city}</span>}
+                </div>
+                <div className={styles.field}>
+                  <label>ZIP code</label>
+                  <input
+                    type="text"
+                    placeholder="10115"
+                    value={delivery.zip}
+                    onChange={(e) => setDelivery({ ...delivery, zip: e.target.value })}
+                  />
+                  {errors.zip && <span className={styles.error}>{errors.zip}</span>}
+                </div>
+              </div>
+              <div className={styles.field}>
+                <label>Country</label>
+                <select
+                  value={delivery.country}
+                  onChange={(e) => setDelivery({ ...delivery, country: e.target.value })}
+                >
+                  <option value="">Select country…</option>
+                  <option value="Germany">Germany</option>
+                  <option value="Austria">Austria</option>
+                  <option value="Switzerland">Switzerland</option>
+                  <option value="United States">United States</option>
+                  <option value="United Kingdom">United Kingdom</option>
+                  <option value="France">France</option>
+                  <option value="Poland">Poland</option>
+                  <option value="Ukraine">Ukraine</option>
+                  <option value="Netherlands">Netherlands</option>
+                  <option value="Other">Other</option>
+                </select>
                 {errors.country && <span className={styles.error}>{errors.country}</span>}
               </div>
               <div className={styles.actions}>
