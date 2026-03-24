@@ -2,6 +2,7 @@
 
 import { useAddress } from "@/app/src/context/AddressesContext";
 import styles from "@/app/pages/profile/page.module.scss";
+import { useEffect } from "react";
 
 type Address = {
     _id: string;
@@ -13,8 +14,11 @@ type Address = {
 
 export default function Addresses({token}:{token: string}) {
     
-  const {addresses,addAddress,deleteAddress,loading,form,setForm} = useAddress()
+  const {addresses,addAddress,deleteAddress,loading,form,setForm,setLoading} = useAddress()
 
+  useEffect(()=>{
+    
+  },addresses)
     return (
     <div className={styles.card}>
       <h2 className={styles.cardTitle}>Saved Addresses</h2>

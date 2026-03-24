@@ -21,6 +21,7 @@ type AdressesContextType = {
   form: {street: string, city: string, zip: string, country: string};
   setForm: Dispatch<SetStateAction<{ street: string; city: string; zip: string; country: string; }>>;
   loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
 };
 
 const AddressContext = createContext<AdressesContextType | null>(null);
@@ -47,11 +48,14 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
             }
         };
     
-        useEffect(()=>{
-          if(token) {
-            fetchAddresses();
-          };
-        },[token]);
+        useEffect(() => {
+            if(!loading && token){
+                fetchAddresses();
+            }
+            if(!loading && !token){
+                setAddresses([]);
+            }
+        },[token,loading]);
      
         async function addAddress(){
             setLoading(true);
@@ -84,7 +88,7 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
         
 
     return (
-        <AddressContext.Provider value={{ addresses, addAddress, deleteAddress, loading, form, setForm }}>
+        <AddressContext.Provider value={{ addresses, addAddress, deleteAddress, loading, form, setForm, setLoading }}>
             {children}
         </AddressContext.Provider>
     );
