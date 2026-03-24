@@ -4,15 +4,7 @@ import { useAddress } from "@/app/src/context/AddressesContext";
 import styles from "@/app/pages/profile/page.module.scss";
 import { useEffect } from "react";
 
-type Address = {
-    _id: string;
-    street: string,
-    city: string,
-    zip: string,
-    country: string
-};
-
-export default function Addresses({token}:{token: string}) {
+export default function Addresses() {
     
   const {addresses,addAddress,deleteAddress,loading,form,setForm,setLoading} = useAddress()
 

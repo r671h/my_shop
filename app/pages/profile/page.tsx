@@ -16,8 +16,8 @@ export default function ProfilePage() {
     return (
         <main className={styles.main}>
             <PersonalInfo user={user}></PersonalInfo>
-            
-            <Addresses token={token || ""}></Addresses>
+            <Orders></Orders>
+            <Addresses></Addresses>
         </main>
         
     );

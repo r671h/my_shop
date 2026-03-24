@@ -6,3 +6,11 @@ export type Product = {
     description:string,
     category:string
 };
+
+export type Address = {
+    _id: string;
+    street: string,
+    city: string,
+    zip: string,
+    country: string
+};

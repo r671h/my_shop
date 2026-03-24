@@ -3,6 +3,8 @@
 import { useState } from "react";
 import styles from "./CheckOutModal.module.scss";
 import Orders from "../Profile/Orders/Orders"
+import { useAddress } from "../../context/AddressesContext";
+import { useOrders } from "../../context/OrdersContext";
 
 type CartItem = {
     productId: number,
@@ -29,6 +31,8 @@ export default function CheckoutModal({
 }: CheckoutModalProps) {
   const [step, setStep] = useState<Step>("delivery");
   const [submitted, setSubmitted] = useState(false);
+  const {addresses, addAddress, form, loading, setForm} = useAddress();
+  const {handleAddOrder, order, setOrder} = useOrders();
 
   const [delivery, setDelivery] = useState({
     fullName: "",
@@ -199,25 +203,66 @@ export default function CheckoutModal({
                   {errors.zip && <span className={styles.error}>{errors.zip}</span>}
                 </div>
               </div>
-              <div className={styles.field}>
-                <label>Country</label>
-                <select
-                  value={delivery.country}
-                  onChange={(e) => setDelivery({ ...delivery, country: e.target.value })}
-                >
-                  <option value="">Select country…</option>
-                  <option value="Germany">Germany</option>
-                  <option value="Austria">Austria</option>
-                  <option value="Switzerland">Switzerland</option>
-                  <option value="United States">United States</option>
-                  <option value="United Kingdom">United Kingdom</option>
-                  <option value="France">France</option>
-                  <option value="Poland">Poland</option>
-                  <option value="Ukraine">Ukraine</option>
-                  <option value="Netherlands">Netherlands</option>
-                  <option value="Other">Other</option>
-                </select>
-                {errors.country && <span className={styles.error}>{errors.country}</span>}
+              <div className={styles.addressList}>
+                {addresses.length === 0 ? (
+                  <p className={styles.empty}>No saved addresses yet.</p>
+                ) : (
+                  addresses.map((addr) => (
+                    <div key={addr._id} className={styles.addressItem}>
+                      <div className={styles.addressInfo}>
+                        <p>{addr.street}</p>
+                        <p>{addr.zip} {addr.city}</p>
+                        <p>{addr.country}</p>
+                      </div>
+                    </div>
+                  ))
+                )}
+                <h3 className={styles.subTitle}>Add New Address</h3>
+                <div className={styles.form}>
+                  <div className={styles.formRow}>
+                    <div className={styles.formGroup}>
+                      <label>Street</label>
+                      <input
+                        value={form.street}
+                        onChange={(e) => setForm({ ...form, street: e.target.value })}
+                        placeholder="123 Main St"
+                      />
+                    </div>
+                    <div className={styles.formGroup}>
+                      <label>City</label>
+                      <input
+                        value={form.city}
+                        onChange={(e) => setForm({ ...form, city: e.target.value })}
+                        placeholder="Berlin"
+                      />
+                    </div>
+                  </div>
+                  <div className={styles.formRow}>
+                    <div className={styles.formGroup}>
+                      <label>ZIP Code</label>
+                      <input
+                        value={form.zip}
+                        onChange={(e) => setForm({ ...form, zip: e.target.value })}
+                        placeholder="10115"
+                      />
+                    </div>
+                    <div className={styles.formGroup}>
+                      <label>Country</label>
+                      <input
+                        value={form.country}
+                        onChange={(e) => setForm({ ...form, country: e.target.value })}
+                        placeholder="Germany"
+                      />
+                    </div>
+                  </div>
+                  <button
+                    className={styles.saveBtn}
+                    onClick={addAddress}
+                    disabled={loading}
+                  >
+                    {loading ? "Saving..." : "Save Address"}
+                  </button>
+                </div>
               </div>
               <div className={styles.actions}>
                 <button className={styles.btnSecondary} onClick={handleClose}>
