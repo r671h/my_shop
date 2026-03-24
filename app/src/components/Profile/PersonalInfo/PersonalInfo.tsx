@@ -14,11 +14,9 @@ export default function PersonalInfo({user} : Props) {
         <div className={styles.formRow}>
           <div className={styles.formGroup}>
             <label>Name</label>
-            <input defaultValue={user?.name} placeholder="Your name" />
           </div>
           <div className={styles.formGroup}>
             <label>Email</label>
-            <input defaultValue={user?.email} disabled />
           </div>
         </div>
       </div>
