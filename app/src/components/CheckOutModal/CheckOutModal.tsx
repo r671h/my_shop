@@ -182,26 +182,6 @@ export default function CheckoutModal({
                 {errors.street && <span className={styles.error}>{errors.street}</span>}
               </div>
               <div className={styles.row}>
-                <div className={styles.field}>
-                  <label>City</label>
-                  <input
-                    type="text"
-                    placeholder="Berlin"
-                    value={delivery.city}
-                    onChange={(e) => setDelivery({ ...delivery, city: e.target.value })}
-                  />
-                  {errors.city && <span className={styles.error}>{errors.city}</span>}
-                </div>
-                <div className={styles.field}>
-                  <label>ZIP code</label>
-                  <input
-                    type="text"
-                    placeholder="10115"
-                    value={delivery.zip}
-                    onChange={(e) => setDelivery({ ...delivery, zip: e.target.value })}
-                  />
-                  {errors.zip && <span className={styles.error}>{errors.zip}</span>}
-                </div>
               </div>
               <div className={styles.addressList}>
                 {addresses.length === 0 ? (
