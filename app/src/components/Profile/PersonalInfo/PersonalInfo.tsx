@@ -21,7 +21,6 @@ export default function PersonalInfo({user} : Props) {
             <input defaultValue={user?.email} disabled />
           </div>
         </div>
-        <button className={styles.saveBtn}>Save Changes</button>
       </div>
     </div>
   );
