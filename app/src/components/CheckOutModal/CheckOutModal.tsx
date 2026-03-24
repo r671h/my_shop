@@ -172,13 +172,6 @@ export default function CheckoutModal({
                 {errors.fullName && <span className={styles.error}>{errors.fullName}</span>}
               </div>
               <div className={styles.field}>
-                <label>Street address</label>
-                <input
-                  type="text"
-                  placeholder="123 Main St, Apt 4"
-                  value={delivery.street}
-                  onChange={(e) => setDelivery({ ...delivery, street: e.target.value })}
-                />
                 {errors.street && <span className={styles.error}>{errors.street}</span>}
               </div>
               <div className={styles.row}>
