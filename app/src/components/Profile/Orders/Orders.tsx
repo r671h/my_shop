@@ -11,7 +11,7 @@ type Order = {
     createdAt: Date
 };
 
-export default function Orders({token}:{token:string}) {
+export default function Orders({token}:{token:string | null}) {
 
   const [orders,setOrders] = useState<Order[]>([]);
   const [order,setOrder] = useState({items:[],total:0,createdAt: Date.now()});
