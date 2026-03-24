@@ -1,8 +1,8 @@
 "use client";
 
-import axios from "axios";
-import { useState, useEffect } from "react";
+import { useAddress } from "@/app/src/context/AddressesContext";
 import styles from "@/app/pages/profile/page.module.scss";
+import { useEffect } from "react";
 
 type Address = {
     _id: string;
@@ -12,63 +12,13 @@ type Address = {
     country: string
 };
 
-const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
-})
-
 export default function Addresses({token}:{token: string}) {
-    const [addresses,setAddresses] = useState<Address[]>([]);
-    const [form,setForm] = useState({street: "", city: "", zip: "", country: ""});
-    const [loading,setLoading] = useState(false);
-
-    async function fetchAddresses(){
-        try{
-            const res = await api.get("/addresses", {
-                headers: {Authorization: `Bearer ${token}`}
-            });
-            setAddresses(res.data);
-        }
-        catch (error: any) {
-            console.error("Error fetching addresses:", error.message);
-        }
-    };
-
-    useEffect(()=>{
-      if(token) {
-        fetchAddresses();
-      };
-    },[token]);
- 
-    async function handleAdd(){
-        setLoading(true);
-        try {
-            const res = await api.post("/addresses", form, {
-                headers: {Authorization: `Bearer ${token}`}
-            });
-            setAddresses(res.data);
-            setForm({street: "", city: "", zip: "", country: ""});
-        }
-        catch (error: any) {
-            console.error("Error adding address:", error.message);
-        }
-        finally{
-            setLoading(false);
-        }
-    };
-
-    async function handleDelete(id: string){
-        try {
-            const res = await api.delete(`/addresses/${id}`, {
-                headers: {Authorization: `Bearer ${token}`}
-            });
-            setAddresses(res.data);
-        }
-        catch (error: any) {
-            console.error("Error deleting address:",error.message);
-        }
-    };
     
+  const {addresses,addAddress,deleteAddress,loading,form,setForm,setLoading} = useAddress()
 
+  useEffect(()=>{
+    
+  },addresses)
     return (
     <div className={styles.card}>
       <h2 className={styles.cardTitle}>Saved Addresses</h2>
@@ -87,7 +37,7 @@ export default function Addresses({token}:{token: string}) {
               </div>
               <button
                 className={styles.deleteBtn}
-                onClick={() => handleDelete(addr._id)}
+                onClick={() => deleteAddress(addr._id)}
               >
                 ✕
               </button>
@@ -137,7 +87,7 @@ export default function Addresses({token}:{token: string}) {
         </div>
         <button
           className={styles.saveBtn}
-          onClick={handleAdd}
+          onClick={addAddress}
           disabled={loading}
         >
           {loading ? "Saving..." : "Save Address"}

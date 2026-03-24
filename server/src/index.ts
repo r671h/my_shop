@@ -2,9 +2,10 @@ import dotenv from "dotenv";
 import express from "express";
 import cors from "cors";
 import { connectDB } from "./config/db";
-import authRoutes from "./routes/authRoute";
+import authRoute from "./routes/authRoute";
 import addressRoute from "./routes/addressRoute";
 import cartRoute from "./routes/cartRoute";
+import orderRoute from "./routes/orderRoute";
 
 dotenv.config();
 
@@ -18,8 +19,9 @@ app.use(cors({
 app.use(express.json());
 
 app.use("/api/cart", cartRoute);
-app.use("/api/auth", authRoutes);
+app.use("/api/auth", authRoute);
 app.use("/api/addresses", addressRoute);
+app.use("/api/orders", orderRoute)
 
 connectDB();
 
