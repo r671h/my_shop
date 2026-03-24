@@ -16,7 +16,7 @@ type Address = {
 
 type AdressesContextType = {
   addresses: Address[];
-  addAddress: (address: Address) => void;
+  addAddress: () => void;
   deleteAddress: (id: string) => void;
   form: {street: string, city: string, zip: string, country: string};
   setForm: Dispatch<SetStateAction<{ street: string; city: string; zip: string; country: string; }>>;
