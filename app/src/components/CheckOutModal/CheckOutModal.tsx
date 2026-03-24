@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import styles from "./CheckoutModal.module.scss";
+import styles from "./CheckOutModal.module.scss";
 import Orders from "../Profile/Orders/Orders"
 
 type CartItem = {
