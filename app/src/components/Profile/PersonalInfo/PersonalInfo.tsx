@@ -14,9 +14,11 @@ export default function PersonalInfo({user} : Props) {
         <div className={styles.formRow}>
           <div className={styles.formGroup}>
             <label>Name</label>
+            <a>{user?.name}</a>
           </div>
           <div className={styles.formGroup}>
             <label>Email</label>
+            <a>{user?.email}</a>
           </div>
         </div>
       </div>
