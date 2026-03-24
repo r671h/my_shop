@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import styles from "./CheckoutModal.module.scss";
+import Orders from "../Profile/Orders/Orders"
 
 type CartItem = {
     productId: number,
@@ -89,6 +90,7 @@ export default function CheckoutModal({
 
   const handlePlaceOrder = () => {
     setSubmitted(true);
+    
   };
 
   const handleClose = () => {
