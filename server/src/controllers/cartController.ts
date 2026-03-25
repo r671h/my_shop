@@ -92,7 +92,6 @@ export async function clearCart(req:Request,res:Response){
         );
         if(!user) return(res.status(404).json({ error: "user not found"}));
 
-        await user.save();
         res.json({items : user.cart});
     }
     catch(error){
