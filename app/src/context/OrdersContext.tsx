@@ -1,22 +1,14 @@
 "use client"
 
-import styles from "@/app/pages/profile/page.module.scss";
 import axios from "axios";
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { createContext } from "react";
 import { useAuth } from "./AuthConext";
-import { Address } from "../types";
+import { Order } from "../types";
 
 
 const api = axios.create({baseURL: process.env.NEXT_PUBLIC_API_URL })
 
-type Order = {
-    _id: string;
-    items: [],
-    total: number,
-    address: Address,
-    createdAt: string
-};
 
 type OrdersContextType = {
     orders: Order[];

@@ -1,7 +1,6 @@
 "use client"
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { Product } from "../types";
 import axios from "axios";
 import { useAuth } from "./AuthConext";
 import { Dispatch,SetStateAction } from "react";

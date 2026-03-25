@@ -2,6 +2,7 @@ import { Request,Response } from "express";
 import { connectDB } from "../config/db";
 import { User } from "../models/User";
 import { title } from "node:process";
+import { CartSchema } from "../models/Cart";
 
 export async function getCart(req: Request,res: Response){
     try {
@@ -88,7 +89,7 @@ export async function clearCart(req:Request,res:Response){
         const user = await User.findById((req as any).userId);
         if(!user) return(res.status(404).json({ error: "user not found"}));
 
-        user.cart = [];
+        user.cart = [CartSchema];
         await user.save();
         res.json({items : user.cart});
     }

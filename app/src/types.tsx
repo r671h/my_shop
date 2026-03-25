@@ -14,3 +14,11 @@ export type Address = {
     zip: string,
     country: string
 };
+
+export type Order = {
+    _id: string;
+    items: [],
+    total: number,
+    address: Address,
+    createdAt: string
+};
