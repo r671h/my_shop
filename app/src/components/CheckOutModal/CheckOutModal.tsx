@@ -5,7 +5,7 @@ import { useCart } from "@/app/src/context/CartContext";
 import { useAddress } from "@/app/src/context/AddressesContext";
 import { useOrders } from "@/app/src/context/OrdersContext";
 import { useAuth } from "@/app/src/context/AuthConext";
-import styles from "./CheckoutModal.module.scss";
+import styles from "./CheckOutModal.module.scss";
 import { Address } from "@/app/src/types";
 
 type Step = "delivery" | "payment" | "confirm";
