@@ -88,7 +88,7 @@ export async function clearCart(req:Request,res:Response){
         const user = await User.findById((req as any).userId);
         if(!user) return(res.status(404).json({ error: "user not found"}));
 
-        user.cart = [];
+        user.cart.splice(0, user.cart.length);
         await user.save();
         res.json({items : user.cart});
     }
