@@ -1,41 +1,34 @@
 "use client";
 
 import { useState } from "react";
-import styles from "./CheckOutModal.module.scss";
-import Orders from "../Profile/Orders/Orders"
-import { useAddress } from "../../context/AddressesContext";
-import { useOrders } from "../../context/OrdersContext";
-
-type CartItem = {
-    productId: number,
-    title: string,
-    price: number,
-    image: string,
-    quantity: number
-}
-
-interface CheckoutModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  cartItems: CartItem[];
-  total: number;
-}
+import { useCart } from "@/app/src/context/CartContext";
+import { useAddress } from "@/app/src/context/AddressesContext";
+import { useOrders } from "@/app/src/context/OrdersContext";
+import { useAuth } from "@/app/src/context/AuthConext";
+import styles from "./CheckoutModal.module.scss";
+import { Address } from "@/app/src/types";
 
 type Step = "delivery" | "payment" | "confirm";
 
-export default function CheckoutModal({
-  isOpen,
-  onClose,
-  cartItems,
-  total,
-}: CheckoutModalProps) {
+type Props = {
+  isOpen: boolean;
+  onClose: () => void;
+};
+
+export default function CheckoutModal({ isOpen, onClose }: Props) {
+  const { items, totalPrice, clearCart } = useCart();
+  const { addresses } = useAddress();
+  const { setOrder, handleAddOrder } = useOrders();
+  const { user } = useAuth();
+
   const [step, setStep] = useState<Step>("delivery");
   const [submitted, setSubmitted] = useState(false);
-  const {addresses, addAddress, form, loading, setForm} = useAddress();
-  const {handleAddOrder, order, setOrder} = useOrders();
+  const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
+  const [useNewAddress, setUseNewAddress] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const [delivery, setDelivery] = useState({
-    fullName: "",
+    fullName: user?.name || "",
     street: "",
     city: "",
     zip: "",
@@ -50,17 +43,19 @@ export default function CheckoutModal({
     cardHolder: "",
   });
 
-  const [errors, setErrors] = useState<Record<string, string>>({});
-
   if (!isOpen) return null;
 
   const validateDelivery = () => {
     const e: Record<string, string> = {};
-    if (!delivery.fullName.trim()) e.fullName = "Full name is required";
-    if (!delivery.street.trim()) e.street = "Street address is required";
-    if (!delivery.city.trim()) e.city = "City is required";
-    if (!delivery.zip.trim()) e.zip = "ZIP code is required";
-    if (!delivery.country.trim()) e.country = "Country is required";
+    if (!selectedAddress && !useNewAddress) {
+      e.address = "Please select an address or enter a new one";
+    }
+    if (useNewAddress) {
+      if (!delivery.street.trim()) e.street = "Street is required";
+      if (!delivery.city.trim()) e.city = "City is required";
+      if (!delivery.zip.trim()) e.zip = "ZIP is required";
+      if (!delivery.country.trim()) e.country = "Country is required";
+    }
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -68,7 +63,7 @@ export default function CheckoutModal({
   const validatePayment = () => {
     const e: Record<string, string> = {};
     if (payment.method === "card") {
-      if (!payment.cardHolder.trim()) e.cardHolder = "Card holder name is required";
+      if (!payment.cardHolder.trim()) e.cardHolder = "Card holder is required";
       if (!/^\d{16}$/.test(payment.cardNumber.replace(/\s/g, "")))
         e.cardNumber = "Enter a valid 16-digit card number";
       if (!/^\d{2}\/\d{2}$/.test(payment.expiry)) e.expiry = "Format: MM/YY";
@@ -92,25 +87,35 @@ export default function CheckoutModal({
     }
   };
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async () => {
+    const address = useNewAddress
+      ? { _id: "", street: delivery.street, city: delivery.city, zip: delivery.zip, country: delivery.country }
+      : selectedAddress!;
+
+    setOrder({
+      _id: "",
+      items: items as any,
+      total: totalPrice,
+      address,
+      createdAt: new Date().toISOString(),
+    });
+
+    await handleAddOrder();
+    await clearCart();
     setSubmitted(true);
-    
   };
 
   const handleClose = () => {
     setStep("delivery");
     setSubmitted(false);
     setErrors({});
+    setSelectedAddress(null);
+    setUseNewAddress(false);
     onClose();
   };
 
-  const formatCardNumber = (val: string) => {
-    return val
-      .replace(/\D/g, "")
-      .slice(0, 16)
-      .replace(/(.{4})/g, "$1 ")
-      .trim();
-  };
+  const formatCardNumber = (val: string) =>
+    val.replace(/\D/g, "").slice(0, 16).replace(/(.{4})/g, "$1 ").trim();
 
   const formatExpiry = (val: string) => {
     const digits = val.replace(/\D/g, "").slice(0, 4);
@@ -120,15 +125,20 @@ export default function CheckoutModal({
 
   const stepIndex = { delivery: 0, payment: 1, confirm: 2 }[step];
 
+  const finalAddress = useNewAddress
+    ? `${delivery.street}, ${delivery.zip} ${delivery.city}, ${delivery.country}`
+    : selectedAddress
+    ? `${selectedAddress.street}, ${selectedAddress.zip} ${selectedAddress.city}, ${selectedAddress.country}`
+    : "";
+
   return (
     <div className={styles.overlay} onClick={(e) => e.target === e.currentTarget && handleClose()}>
       <div className={styles.modal}>
+
         {/* Header */}
         <div className={styles.header}>
           <h2 className={styles.title}>Checkout</h2>
-          <button className={styles.closeBtn} onClick={handleClose} aria-label="Close">
-            ✕
-          </button>
+          <button className={styles.closeBtn} onClick={handleClose}>✕</button>
         </div>
 
         {/* Steps */}
@@ -144,108 +154,117 @@ export default function CheckoutModal({
           </div>
         )}
 
-        {/* Body */}
         <div className={styles.body}>
+
+          {/* Success */}
           {submitted ? (
             <div className={styles.success}>
               <div className={styles.successIcon}>✓</div>
               <h3>Order placed!</h3>
-              <p>
-                Thank you, <strong>{delivery.fullName}</strong>. Your order will be delivered to{" "}
-                <strong>{delivery.street}, {delivery.city}</strong>.
-              </p>
-              <button className={styles.btnPrimary} onClick={handleClose}>
-                Back to shop
-              </button>
+              <p>Thank you, <strong>{user?.name}</strong>. Your order will be delivered to <strong>{finalAddress}</strong>.</p>
+              <button className={styles.btnPrimary} onClick={handleClose}>Back to shop</button>
             </div>
+
           ) : step === "delivery" ? (
             <div className={styles.form}>
               <h3 className={styles.sectionTitle}>Delivery address</h3>
-              <div className={styles.field}>
-                <label>Full name</label>
-                <input
-                  type="text"
-                  placeholder="John Doe"
-                  value={delivery.fullName}
-                  onChange={(e) => setDelivery({ ...delivery, fullName: e.target.value })}
-                />
-                {errors.fullName && <span className={styles.error}>{errors.fullName}</span>}
-              </div>
-              <div className={styles.field}>
-                {errors.street && <span className={styles.error}>{errors.street}</span>}
-              </div>
-              <div className={styles.row}>
-              </div>
-              <div className={styles.addressList}>
-                {addresses.length === 0 ? (
-                  <p className={styles.empty}>No saved addresses yet.</p>
-                ) : (
-                  addresses.map((addr) => (
-                    <div key={addr._id} className={styles.addressItem}>
-                      <div className={styles.addressInfo}>
-                        <p>{addr.street}</p>
-                        <p>{addr.zip} {addr.city}</p>
-                        <p>{addr.country}</p>
+
+              {/* Saved addresses */}
+              {addresses.length > 0 && (
+                <div className={styles.savedAddresses}>
+                  <p className={styles.savedLabel}>Your saved addresses:</p>
+                  {addresses.map((addr) => (
+                    <div
+                      key={addr._id}
+                      className={`${styles.addressOption} ${selectedAddress?._id === addr._id && !useNewAddress ? styles.addressSelected : ""}`}
+                      onClick={() => { setSelectedAddress(addr); setUseNewAddress(false); }}
+                    >
+                      <div className={styles.radioCircle}>
+                        {selectedAddress?._id === addr._id && !useNewAddress && <div className={styles.radioDot} />}
                       </div>
+                      <span>{addr.street}, {addr.zip} {addr.city}, {addr.country}</span>
                     </div>
-                  ))
-                )}
-                <h3 className={styles.subTitle}>Add New Address</h3>
-                <div className={styles.form}>
-                  <div className={styles.formRow}>
-                    <div className={styles.formGroup}>
-                      <label>Street</label>
-                      <input
-                        value={form.street}
-                        onChange={(e) => setForm({ ...form, street: e.target.value })}
-                        placeholder="123 Main St"
-                      />
-                    </div>
-                    <div className={styles.formGroup}>
+                  ))}
+                </div>
+              )}
+
+              {/* New address toggle */}
+              <div
+                className={`${styles.addressOption} ${useNewAddress ? styles.addressSelected : ""}`}
+                onClick={() => { setUseNewAddress(true); setSelectedAddress(null); }}
+              >
+                <div className={styles.radioCircle}>
+                  {useNewAddress && <div className={styles.radioDot} />}
+                </div>
+                <span>Enter a new address</span>
+              </div>
+
+              {errors.address && <span className={styles.error}>{errors.address}</span>}
+
+              {/* New address form */}
+              {useNewAddress && (
+                <>
+                  <div className={styles.field}>
+                    <label>Street</label>
+                    <input
+                      type="text"
+                      placeholder="123 Main St"
+                      value={delivery.street}
+                      onChange={(e) => setDelivery({ ...delivery, street: e.target.value })}
+                    />
+                    {errors.street && <span className={styles.error}>{errors.street}</span>}
+                  </div>
+                  <div className={styles.row}>
+                    <div className={styles.field}>
                       <label>City</label>
                       <input
-                        value={form.city}
-                        onChange={(e) => setForm({ ...form, city: e.target.value })}
+                        type="text"
                         placeholder="Berlin"
+                        value={delivery.city}
+                        onChange={(e) => setDelivery({ ...delivery, city: e.target.value })}
                       />
+                      {errors.city && <span className={styles.error}>{errors.city}</span>}
                     </div>
-                  </div>
-                  <div className={styles.formRow}>
-                    <div className={styles.formGroup}>
-                      <label>ZIP Code</label>
+                    <div className={styles.field}>
+                      <label>ZIP</label>
                       <input
-                        value={form.zip}
-                        onChange={(e) => setForm({ ...form, zip: e.target.value })}
+                        type="text"
                         placeholder="10115"
+                        value={delivery.zip}
+                        onChange={(e) => setDelivery({ ...delivery, zip: e.target.value })}
                       />
-                    </div>
-                    <div className={styles.formGroup}>
-                      <label>Country</label>
-                      <input
-                        value={form.country}
-                        onChange={(e) => setForm({ ...form, country: e.target.value })}
-                        placeholder="Germany"
-                      />
+                      {errors.zip && <span className={styles.error}>{errors.zip}</span>}
                     </div>
                   </div>
-                  <button
-                    className={styles.saveBtn}
-                    onClick={addAddress}
-                    disabled={loading}
-                  >
-                    {loading ? "Saving..." : "Save Address"}
-                  </button>
-                </div>
-              </div>
+                  <div className={styles.field}>
+                    <label>Country</label>
+                    <select
+                      value={delivery.country}
+                      onChange={(e) => setDelivery({ ...delivery, country: e.target.value })}
+                    >
+                      <option value="">Select country…</option>
+                      <option>Germany</option>
+                      <option>Austria</option>
+                      <option>Switzerland</option>
+                      <option>United States</option>
+                      <option>United Kingdom</option>
+                      <option>France</option>
+                      <option>Poland</option>
+                      <option>Ukraine</option>
+                      <option>Netherlands</option>
+                      <option>Other</option>
+                    </select>
+                    {errors.country && <span className={styles.error}>{errors.country}</span>}
+                  </div>
+                </>
+              )}
+
               <div className={styles.actions}>
-                <button className={styles.btnSecondary} onClick={handleClose}>
-                  Cancel
-                </button>
-                <button className={styles.btnPrimary} onClick={handleDeliveryNext}>
-                  Next: Payment →
-                </button>
+                <button className={styles.btnSecondary} onClick={handleClose}>Cancel</button>
+                <button className={styles.btnPrimary} onClick={handleDeliveryNext}>Next: Payment →</button>
               </div>
             </div>
+
           ) : step === "payment" ? (
             <div className={styles.form}>
               <h3 className={styles.sectionTitle}>Payment method</h3>
@@ -283,9 +302,7 @@ export default function CheckoutModal({
                       placeholder="1234 5678 9012 3456"
                       value={payment.cardNumber}
                       maxLength={19}
-                      onChange={(e) =>
-                        setPayment({ ...payment, cardNumber: formatCardNumber(e.target.value) })
-                      }
+                      onChange={(e) => setPayment({ ...payment, cardNumber: formatCardNumber(e.target.value) })}
                     />
                     {errors.cardNumber && <span className={styles.error}>{errors.cardNumber}</span>}
                   </div>
@@ -297,9 +314,7 @@ export default function CheckoutModal({
                         placeholder="09/27"
                         value={payment.expiry}
                         maxLength={5}
-                        onChange={(e) =>
-                          setPayment({ ...payment, expiry: formatExpiry(e.target.value) })
-                        }
+                        onChange={(e) => setPayment({ ...payment, expiry: formatExpiry(e.target.value) })}
                       />
                       {errors.expiry && <span className={styles.error}>{errors.expiry}</span>}
                     </div>
@@ -310,9 +325,7 @@ export default function CheckoutModal({
                         placeholder="•••"
                         value={payment.cvv}
                         maxLength={4}
-                        onChange={(e) =>
-                          setPayment({ ...payment, cvv: e.target.value.replace(/\D/g, "") })
-                        }
+                        onChange={(e) => setPayment({ ...payment, cvv: e.target.value.replace(/\D/g, "") })}
                       />
                       {errors.cvv && <span className={styles.error}>{errors.cvv}</span>}
                     </div>
@@ -325,14 +338,11 @@ export default function CheckoutModal({
               )}
 
               <div className={styles.actions}>
-                <button className={styles.btnSecondary} onClick={() => setStep("delivery")}>
-                  ← Back
-                </button>
-                <button className={styles.btnPrimary} onClick={handlePaymentNext}>
-                  Next: Review →
-                </button>
+                <button className={styles.btnSecondary} onClick={() => setStep("delivery")}>← Back</button>
+                <button className={styles.btnPrimary} onClick={handlePaymentNext}>Next: Review →</button>
               </div>
             </div>
+
           ) : (
             <div className={styles.form}>
               <h3 className={styles.sectionTitle}>Order review</h3>
@@ -340,22 +350,15 @@ export default function CheckoutModal({
               <div className={styles.reviewSection}>
                 <div className={styles.reviewLabel}>
                   Deliver to
-                  <button className={styles.editLink} onClick={() => setStep("delivery")}>
-                    Edit
-                  </button>
+                  <button className={styles.editLink} onClick={() => setStep("delivery")}>Edit</button>
                 </div>
-                <p className={styles.reviewValue}>
-                  {delivery.fullName}, {delivery.street}, {delivery.zip} {delivery.city},{" "}
-                  {delivery.country}
-                </p>
+                <p className={styles.reviewValue}>{finalAddress}</p>
               </div>
 
               <div className={styles.reviewSection}>
                 <div className={styles.reviewLabel}>
                   Payment
-                  <button className={styles.editLink} onClick={() => setStep("payment")}>
-                    Edit
-                  </button>
+                  <button className={styles.editLink} onClick={() => setStep("payment")}>Edit</button>
                 </div>
                 <p className={styles.reviewValue}>
                   {payment.method === "card"
@@ -365,29 +368,23 @@ export default function CheckoutModal({
               </div>
 
               <div className={styles.itemsList}>
-                {cartItems.map((item) => (
+                {items.map((item) => (
                   <div key={item.productId} className={styles.itemRow}>
                     <span className={styles.itemName}>
                       {item.title} <span className={styles.itemQty}>× {item.quantity}</span>
                     </span>
-                    <span className={styles.itemPrice}>
-                      ${(item.price * item.quantity).toFixed(2)}
-                    </span>
+                    <span className={styles.itemPrice}>${(item.price * item.quantity).toFixed(2)}</span>
                   </div>
                 ))}
                 <div className={styles.totalRow}>
                   <span>Total</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>${totalPrice.toFixed(2)}</span>
                 </div>
               </div>
 
               <div className={styles.actions}>
-                <button className={styles.btnSecondary} onClick={() => setStep("payment")}>
-                  ← Back
-                </button>
-                <button className={styles.btnPrimary} onClick={handlePlaceOrder}>
-                  Place order
-                </button>
+                <button className={styles.btnSecondary} onClick={() => setStep("payment")}>← Back</button>
+                <button className={styles.btnPrimary} onClick={handlePlaceOrder}>Place order</button>
               </div>
             </div>
           )}
