@@ -50,7 +50,7 @@ export default function CartPage() {
         Total: <span>${totalPrice.toFixed(2)}</span>
       </div>
       <button onClick={() => setIsCheckoutOpen(true)}>Checkout</button>
-      {/* <CheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} /> */}
+      <CheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} />
     </main>
   );
 

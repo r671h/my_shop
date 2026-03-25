@@ -70,6 +70,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         }
         catch (error: any) {
             console.error("Error adding to cart", error.message);
+            console.error("FULL ERROR:", error)
         }
     };
 
@@ -83,6 +84,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         }
         catch (error: any) {
             console.error("Error removing from cart", error.message);
+            console.error("FULL ERROR:", error)
         }
     };
 
@@ -95,6 +97,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         }
         catch (error: any) {            
             console.error("Error updating cart", error.message);
+            console.error("FULL ERROR:", error)
         }
     };
 

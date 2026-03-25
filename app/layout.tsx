@@ -16,15 +16,15 @@ export default async function RootLayout({
     <html lang="en">
       <body>
         <AuthProvider>
-          <AddressProvider>
-            <OrdersProvider>
-              <CartProvider>
-                <Header/>
-                  {children}
-                <Footer/>
-              </CartProvider>
-            </OrdersProvider>
-          </AddressProvider>
+          <CartProvider>
+            <AddressProvider>
+              <OrdersProvider>
+                  <Header/>
+                    {children}
+                  <Footer/>
+              </OrdersProvider>
+            </AddressProvider>
+          </CartProvider>
         </AuthProvider>
       </body>
     </html>
