@@ -28,7 +28,7 @@ const CartContext = createContext<CartContextType | null>(null);
 
 const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL
-})
+});
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
     const [items,setItems] = useState<CartItem[]>([]);
