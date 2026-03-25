@@ -103,7 +103,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
             const res = await api.delete("/cart/clear",{
                 headers: { Authorization : `Bearer ${token}`}
             });
-            setItems(res.data.items || []);
+            setItems([]);
         }
         catch (error: any) {
             console.error("Error clearing cart", error.message);
