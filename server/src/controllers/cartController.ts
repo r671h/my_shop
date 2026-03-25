@@ -95,6 +95,7 @@ export async function clearCart(req:Request,res:Response){
         res.json({items : user.cart});
     }
     catch(error){
+        console.error("clearCart error:", error);
         res.status(500).json({ error: "Something went wrong" });
     }
 }
