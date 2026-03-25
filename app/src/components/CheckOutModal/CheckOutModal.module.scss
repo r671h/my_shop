@@ -339,5 +339,83 @@
 
 .totalRow {
   @include flex(row, space-between, center, 0);
-  padding: $spacing-sm $spac;
+  padding: $spacing-sm $spacing-md;
+  background: #f9fafb;
+  font-size: 16px;
+  font-weight: 700;
+  color: $text-dark;
+
+  span:last-child {
+    color: $primary;
+  }
+}
+
+// ─── Actions ───────────────────────────────────────
+.actions {
+  @include flex(row, space-between, center, $spacing-md);
+  margin-top: $spacing-sm;
+}
+
+.btnPrimary {
+  background-color: $primary;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: $spacing-sm $spacing-xl;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: $primary-dark;
+  }
+}
+
+.btnSecondary {
+  background: none;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: $spacing-sm $spacing-lg;
+  font-size: 15px;
+  font-weight: 600;
+  color: $text-gray;
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    border-color: $primary;
+    color: $primary;
+  }
+}
+
+// ─── Success ───────────────────────────────────────
+.success {
+  @include flex(column, center, center, $spacing-md);
+  padding: $spacing-xl 0;
+  text-align: center;
+
+  h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: $text-dark;
+  }
+
+  p {
+    font-size: 15px;
+    color: $text-gray;
+    line-height: 1.6;
+    max-width: 360px;
+  }
+}
+
+.successIcon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #dcfce7;
+  color: #16a34a;
+  font-size: 28px;
+  font-weight: 700;
+  @include flex(row, center, center, 0);
 }
