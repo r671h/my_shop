@@ -70,7 +70,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         }
         catch (error: any) {
             console.error("Error adding to cart", error.message);
-            console.error("FULL ERROR:", error)
+            console.log("token:", token)
         }
     };
 
