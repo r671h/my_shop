@@ -85,17 +85,14 @@ export async function updateQuantity(req: Request,res: Response){
 export async function clearCart(req:Request,res:Response){
     try{
         await connectDB();
-        const user = await User.findByIdAndUpdate(
-            (req as any).userId,
-            { $set: { cart: [] } },
-            { new: true }
-        );
+        const user = await User.findById((req as any).userId);
         if(!user) return(res.status(404).json({ error: "user not found"}));
 
+        user.cart = [];
+        await user.save();
         res.json({items : user.cart});
     }
     catch(error){
-        console.error("clearCart error:", error);
         res.status(500).json({ error: "Something went wrong" });
     }
 }
