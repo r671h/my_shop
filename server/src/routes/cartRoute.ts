@@ -1,6 +1,6 @@
 import { authMiddleware } from "../middleware/authMiddleware";
 import { addToCart, getCart, removeFromCart, clearCart, updateQuantity } from "../controllers/cartController";
-import e, { Router } from "express";
+import { Router } from "express";
 
 const router = Router();
 
