@@ -49,7 +49,7 @@ export default function CartPage() {
       <div className={styles.total}>
         Total: <span>${totalPrice.toFixed(2)}</span>
       </div>
-      <button onClick={() => setIsCheckoutOpen(true)}>Checkout</button>
+      <button onClick={() => setIsCheckoutOpen(true)} className={styles.btnCheckout}>Checkout</button>
       <CheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} />
     </main>
   );
