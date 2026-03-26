@@ -92,15 +92,15 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
       ? { _id: "", street: delivery.street, city: delivery.city, zip: delivery.zip, country: delivery.country }
       : selectedAddress!;
 
-    await setOrder({
+    const newOrder = {
       _id: "",
       items: items,
       total: totalPrice,
-      address,
+      address: address,
       createdAt: new Date().toString(),
-    });
+    };
 
-    await handleAddOrder(order);
+    await handleAddOrder(newOrder);
     await clearCart();
     setSubmitted(true);
   };
