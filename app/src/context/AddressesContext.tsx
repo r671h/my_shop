@@ -4,14 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useAuth } from "./AuthConext";
 import { Dispatch,SetStateAction } from "react";
-
-type Address = {
-    _id: string;
-    street: string,
-    city: string,
-    zip: string,
-    country: string
-};
+import { Address } from "../types";
 
 type AdressesContextType = {
   addresses: Address[];
