@@ -5,6 +5,7 @@ import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from
 import { createContext } from "react";
 import { useAuth } from "./AuthConext";
 import { Order } from "../types";
+import { CartItem } from "../types";
 
 
 const api = axios.create({baseURL: process.env.NEXT_PUBLIC_API_URL })
@@ -27,7 +28,7 @@ const OrdersContext = createContext<OrdersContextType | null>(null);
 export function OrdersProvider({children}:{ children : React.ReactNode}) {
 
   const [orders,setOrders] = useState<Order[]>([]);
-  const [order,setOrder] = useState<Order>({_id:"",items:[],total:0,address:{_id:"" ,street: "", city: "", zip: "", country: ""},createdAt: Date.now().toString()});
+  const [order,setOrder] = useState<Order>({_id:"",items: [],total:0,address:{_id:"" ,street: "", city: "", zip: "", country: ""},createdAt: Date.now().toString()});
   const [loading,setLoading] = useState(false);
   const {token} = useAuth();
 

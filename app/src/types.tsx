@@ -17,8 +17,16 @@ export type Address = {
 
 export type Order = {
     _id: string;
-    items: [],
+    items: Array<CartItem>,
     total: number,
     address: Address,
     createdAt: string
+};
+
+export type CartItem = {
+    productId: number;
+    title: string;
+    price: number;
+    image: string;
+    quantity: number;
 };

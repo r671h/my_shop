@@ -94,10 +94,10 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
 
     setOrder({
       _id: "",
-      items: items as any,
+      items: items,
       total: totalPrice,
       address,
-      createdAt: new Date().toISOString(),
+      createdAt: new Date().toString(),
     });
 
     await handleAddOrder();

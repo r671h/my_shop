@@ -1,17 +1,10 @@
 "use client"
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { Product } from "../types";
+import { CartItem, Product } from "../types";
 import axios from "axios";
 import { useAuth } from "./AuthConext";
 
-type CartItem = {
-    productId: number;
-    title: string;
-    price: number;
-    image: string;
-    quantity: number;
-};
 
 type CartContextType = {
   items: CartItem[];
