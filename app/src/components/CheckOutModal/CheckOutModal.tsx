@@ -137,7 +137,7 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
 
         {/* Header */}
         <div className={styles.header}>
-          <h2 className={styles.title}>Checkout</h2>
+          <h2 className={styles.btnCheckout}>Checkout</h2>
           <button className={styles.closeBtn} onClick={handleClose}>✕</button>
         </div>
 
