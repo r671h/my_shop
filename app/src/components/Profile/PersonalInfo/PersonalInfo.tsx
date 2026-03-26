@@ -14,14 +14,13 @@ export default function PersonalInfo({user} : Props) {
         <div className={styles.formRow}>
           <div className={styles.formGroup}>
             <label>Name</label>
-            <input defaultValue={user?.name} placeholder="Your name" />
+            <a>{user?.name}</a>
           </div>
           <div className={styles.formGroup}>
             <label>Email</label>
-            <input defaultValue={user?.email} disabled />
+            <a>{user?.email}</a>
           </div>
         </div>
-        <button className={styles.saveBtn}>Save Changes</button>
       </div>
     </div>
   );

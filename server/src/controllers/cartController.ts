@@ -1,7 +1,6 @@
 import { Request,Response } from "express";
 import { connectDB } from "../config/db";
 import { User } from "../models/User";
-import { title } from "node:process";
 
 export async function getCart(req: Request,res: Response){
     try {
@@ -36,7 +35,8 @@ export async function addToCart(req: Request,res: Response){
         res.json({items : user.cart});
 
     }catch (error) {
-        res.status(500).json({message: "Error adding to cart"});
+        console.error("ERROR:", error);
+        res.status(500).json({ message: "Error", detail: String(error) });;
     }
 }
 
@@ -52,7 +52,8 @@ export async function removeFromCart(req: Request,res: Response){
         res.json({items : user.cart});
     }
     catch (error){
-        res.status(500).json({message: "Error removing from cart"});
+        console.error("ERROR:", error);
+        res.status(500).json({ message: "Error", detail: String(error) });;
     }
 }
 
@@ -78,7 +79,8 @@ export async function updateQuantity(req: Request,res: Response){
         res.json({items : user.cart});
     }
     catch (error){
-        res.status(500).json({message: "Error updating cart item"});
+        console.error("ERROR:", error);
+        res.status(500).json({ message: "Error", detail: String(error) });;
     }
 }
 
@@ -93,6 +95,7 @@ export async function clearCart(req:Request,res:Response){
         res.json({items : user.cart});
     }
     catch(error){
-        res.status(500).json({ error: "Something went wrong" });
+        console.error("ERROR:", error);
+        res.status(500).json({ message: "Error", detail: String(error) });
     }
 }

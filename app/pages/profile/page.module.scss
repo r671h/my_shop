@@ -250,19 +250,23 @@
   padding: $spacing-md 0;
 }
 
+// ─── Orders ────────────────────────────────────────────
 .orderList {
   @include flex(column, flex-start, stretch, $spacing-md);
 }
 
 .orderItem {
   @include flex(row, space-between, center, $spacing-md);
-  padding: $spacing-md;
+  padding: $spacing-md $spacing-lg;
   border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  transition: box-shadow 0.2s;
+  border-radius: 10px;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  background: #fafafa;
 
   &:hover {
-    box-shadow: 0 2px 8px $shadow;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+    border-color: $primary;
+    background: white;
   }
 }
 
@@ -270,19 +274,37 @@
   @include flex(column, flex-start, flex-start, 4px);
 
   .orderDate {
-    font-size: 13px;
+    font-size: 12px;
+    font-weight: 600;
     color: $text-gray;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
   }
 
   .orderItems {
     font-size: 14px;
     color: $text-dark;
-    font-weight: 500;
+    font-weight: 600;
   }
+
+  .orderItemNames {
+    font-size: 13px;
+    color: $text-gray;
+    max-width: 360px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.orderRight {
+  @include flex(row, flex-end, center, $spacing-md);
+  flex-shrink: 0;
 }
 
 .orderTotal {
   font-size: 18px;
   font-weight: 700;
   color: $primary;
+  white-space: nowrap;
 }

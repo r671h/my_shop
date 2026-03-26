@@ -1,17 +1,10 @@
 "use client"
 
 import { createContext, useContext, useEffect, useState } from "react";
-import { Product } from "../types";
+import { CartItem, Product } from "../types";
 import axios from "axios";
 import { useAuth } from "./AuthConext";
 
-type CartItem = {
-    productId: number;
-    title: string;
-    price: number;
-    image: string;
-    quantity: number;
-};
 
 type CartContextType = {
   items: CartItem[];
@@ -28,7 +21,7 @@ const CartContext = createContext<CartContextType | null>(null);
 
 const api = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL
-})
+});
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
     const [items,setItems] = useState<CartItem[]>([]);
@@ -70,6 +63,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         }
         catch (error: any) {
             console.error("Error adding to cart", error.message);
+            console.error("FULL ERROR:", error)
         }
     };
 
@@ -83,6 +77,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         }
         catch (error: any) {
             console.error("Error removing from cart", error.message);
+            console.error("FULL ERROR:", error)
         }
     };
 
@@ -95,12 +90,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         }
         catch (error: any) {            
             console.error("Error updating cart", error.message);
+            console.error("FULL ERROR:", error)
         }
     };
 
     const clearCart = async () => {
         try{
-            const res = await api.delete("/cart/clear",{
+            const res = await api.delete(`/cart/clear`,{
                 headers: { Authorization : `Bearer ${token}`}
             });
             setItems(res.data.items || []);

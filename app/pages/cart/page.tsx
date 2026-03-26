@@ -8,7 +8,7 @@ import styles from "./page.module.scss";
 
 export default function CartPage() {
     const {items,removeFromCart,totalItems,totalPrice,updateQuantity} = useCart();
-    const [showCheckout, setShowCheckout] = useState(false);
+    const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
 
     if (items.length === 0) {
     return (
@@ -49,27 +49,8 @@ export default function CartPage() {
       <div className={styles.total}>
         Total: <span>${totalPrice.toFixed(2)}</span>
       </div>
-      <button
-            onClick={() => setShowCheckout(true)}
-            style={{
-              padding: "12px 32px",
-              background: "#111",
-              color: "#fff",
-              border: "none",
-              borderRadius: "8px",
-              fontSize: "15px",
-              fontWeight: 600,
-              cursor: "pointer",
-            }}
-          >
-            Buy now
-          </button>
-          <CheckoutModal
-          isOpen={showCheckout}
-          onClose={()=> setShowCheckout(false)}
-          cartItems={items}
-          total={totalItems}
-          />
+      <button onClick={() => setIsCheckoutOpen(true)} className={styles.btnCheckout}>Checkout</button>
+      <CheckoutModal isOpen={isCheckoutOpen} onClose={() => setIsCheckoutOpen(false)} />
     </main>
   );
 

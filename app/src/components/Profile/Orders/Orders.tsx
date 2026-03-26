@@ -1,71 +1,42 @@
 import styles from "@/app/pages/profile/page.module.scss";
-import axios from "axios";
-import { useEffect, useState } from "react";
-
-const api = axios.create({baseURL: process.env.NEXT_PUBLIC_API_URL })
-
-type Order = {
-    _id: string;
-    items: [],
-    total: number,
-    createdAt: Date
-};
-
-export default function Orders({token}:{token:string | null}) {
-
-  const [orders,setOrders] = useState<Order[]>([]);
-  const [order,setOrder] = useState({items:[],total:0,createdAt: Date.now()});
-  const [loading,setLoading] = useState(false);
-
-  async function fetchOrders(){
-    try{
-        const res = await api.get("/addresses", {
-            headers: {Authorization: `Bearer ${token}`}
-        });
-        setOrder(res.data);
-    }
-    catch (error: any) {
-        console.error("Error fetching orders:", error.message);
-    }
-
-  };
-
-  useEffect(()=>{
-    if(token){
-      fetchOrders();
-    }
-  },[token]);
-
-  async function handleAddOrder() {
-    setLoading(true);
-    try{
-      const res = await api.post("/orders",order, {
-        headers:{Authorization: `Bearer ${token}`}
-      });
-    }
-    catch(e: any){
-      console.error("Error adding order:", e.message);
-    }
-    finally{
-      setLoading(false);
-    }
-  };
-
-  async function handleDelteOrder(id: string) {
-    try{
-      const res = await api.delete(`/orders/${id}`,{
-        headers:{Authorization:`Bearer ${token}`}
-      });
-    }
-    catch(e: any){
-      console.error("Error deleting  order:", e.message);
-    }
-  }
-
+import { useOrders } from "@/app/src/context/OrdersContext";
+ 
+export default function Orders() {
+  const { orders } = useOrders();
+ 
   return (
     <div className={styles.card}>
       <h2 className={styles.cardTitle}>Order History</h2>
-      {orders ? orders.map((order)=> <div>{order.createdAt.toString()}</div>) : <p className={styles.empty}>No orders yet.</p>}
+ 
+      {orders && orders.length > 0 ? (
+        <div className={styles.orderList}>
+          {orders.map((ord) => (
+            <div key={ord._id} className={styles.orderItem}>
+              <div className={styles.orderInfo}>
+                <span className={styles.orderDate}>
+                  🗓 {new Date(ord.createdAt).toLocaleDateString("en-GB", {
+                    day: "numeric",
+                    month: "short",
+                    year: "numeric",
+                  })}
+                </span>
+                <span className={styles.orderItems}>
+                  {ord.items.length} item{ord.items.length !== 1 ? "s" : ""} —{" "}
+                  {ord.address.street}, {ord.address.city}
+                </span>
+                <span className={styles.orderItemNames}>
+                  {ord.items.map((i) => `${i.title} ×${i.quantity}`).join(", ")}
+                </span>
+              </div>
+              <div className={styles.orderRight}>
+                <span className={styles.orderTotal}>${ord.total.toFixed(2)}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className={styles.empty}>No orders yet.</p>
+      )}
     </div>
   );
 }

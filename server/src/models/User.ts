@@ -1,5 +1,4 @@
 import { Schema, model,models } from 'mongoose';
-import { Cart } from './Cart';
 import { CartSchema } from './Cart';
 import { OrdersSchema } from './Order';
 
@@ -16,7 +15,7 @@ const UserSchema = new Schema({
         }
     ],
     orders: [OrdersSchema],
-  cart: [CartSchema]
+    cart: [CartSchema]
 }, {timestamps: true});
 
 export const User = models.User || model('User', UserSchema);
