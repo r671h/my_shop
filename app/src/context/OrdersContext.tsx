@@ -18,7 +18,7 @@ type OrdersContextType = {
     setOrder: Dispatch<SetStateAction<Order>>
     setOrders: Dispatch<SetStateAction<Order[]>>;
     setLoading: Dispatch<SetStateAction<boolean>>;
-    handleAddOrder: () => void;
+    handleAddOrder: (newOrder:Order) => void;
     handleDeleteOrder: (id:string) => void;
 };
 
@@ -37,7 +37,7 @@ export function OrdersProvider({children}:{ children : React.ReactNode}) {
         const res = await api.get("/orders", {
             headers: {Authorization: `Bearer ${token}`}
         });
-        setOrder(res.data);
+        setOrders(res.data);
     }
     catch (error: any) {
         console.error("Error fetching orders:", error.message);
@@ -51,10 +51,10 @@ export function OrdersProvider({children}:{ children : React.ReactNode}) {
     }
   },[token]);
 
-  async function handleAddOrder() {
+  async function handleAddOrder(newOrder: Order) {
     setLoading(true);
     try{
-      const res = await api.post("/orders",order, {
+      const res = await api.post("/orders",newOrder, {
         headers:{Authorization: `Bearer ${token}`}
       });
       setOrders(res.data);
