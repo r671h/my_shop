@@ -57,20 +57,16 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
                 const res = await api.post("/addresses", form, {
                     headers: {Authorization: `Bearer ${token}`}
                 });
-                addresses.map((addr) => {
-                    console.log(form);
-                    
-                    if(JSON.stringify(addr.city && addr.country && addr.street && addr.zip) === JSON.stringify(form.city && form.country && form.street && form.zip)) {
-                        console.log("address already exist") 
-                        return 0
-                    }
-                    else {
-                        console.log({addr});
-                        console.log({form});
-                        
-                        next
-                    }
-                })
+                const exists = addresses.some((addr) => 
+                addr.street === form.street &&
+                    addr.city === form.city &&
+                    addr.zip === form.zip);
+                
+                if (exists) {
+                    console.log("Address already exists");
+                    return;
+                }
+
                 setAddresses(res.data);
                 setForm({street: "", city: "", zip: "", country: ""});
             }
@@ -82,32 +78,33 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
             }
         };
 
-        async function handleAddAddress(address:Address){
+        async function handleAddAddress(address: Address) {
             setLoading(true);
+
             try {
+                const exists = addresses.some((addr) =>
+                    addr.street === address.street &&
+                    addr.city === address.city &&
+                    addr.zip === address.zip
+                );
+
+                if (exists) {
+                    console.log("Address already exists");
+                    return;
+                }
+
                 const res = await api.post("/addresses", address, {
-                    headers: {Authorization: `Bearer ${token}`}
+                    headers: { Authorization: `Bearer ${token}` }
                 });
-                addresses.map((addr) => {
-                    if(address == addr) {
-                        console.log("address already exist") 
-                        return 0
-                    }
-                    else {
-                        console.log(addr);
-                        
-                        next
-                    }
-                })
+
                 setAddresses(res.data);
-            }
-            catch (error: any) {
+
+            } catch (error: any) {
                 console.error("Error adding address:", error.message);
-            }
-            finally{
+            } finally {
                 setLoading(false);
             }
-        };
+        }
     
         async function deleteAddress(id: string){
             try {
