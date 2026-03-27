@@ -1,8 +1,15 @@
 import styles from "@/app/pages/profile/page.module.scss";
+import { useAuth } from "@/app/src/context/AuthConext";
 import { useOrders } from "@/app/src/context/OrdersContext";
+import { useEffect } from "react";
 
 export default function Orders() {
   const { orders } = useOrders();
+  const { token } = useAuth()
+
+  useEffect(()=>{
+
+  },[token]);
 
   return (
     <div className={styles.card}>
