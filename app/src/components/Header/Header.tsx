@@ -46,7 +46,7 @@ export default function Header() {
             onClick={handleCartClick}
             style={!isLoggedIn ? { cursor: "pointer" } : undefined}
           >
-            <CartDropdown />
+            <CartDropdown isLoggedIn={isLoggedIn} onRequireAuth={() => setShowAuthPrompt(true)}/>
           </div>
         </nav>
       </header>
