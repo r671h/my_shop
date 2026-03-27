@@ -42,15 +42,7 @@ export default function Header() {
             <Link href="/pages/auth/login" className={styles.link}>Login</Link>
           )}
 
-          <div
-            onClick={handleCartClick}
-            style={!isLoggedIn ? { cursor: "pointer" } : undefined}
-          >
-            {isLoggedIn ? <CartDropdown /> : <AuthModal
-        isOpen={showAuthPrompt}
-        onClose={() => setShowAuthPrompt(false)}
-      />}
-          </div>
+          {isLoggedIn ? <CartDropdown/> : <AuthModal onClose={()=>setShowAuthPrompt(false)} isOpen={showAuthPrompt}/>}
         </nav>
       </header>
     </>
