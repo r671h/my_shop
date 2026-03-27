@@ -54,9 +54,6 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
         async function addAddress(){
             setLoading(true);
             try {
-                const res = await api.post("/addresses", form, {
-                    headers: {Authorization: `Bearer ${token}`}
-                });
                 const exists = addresses.some((addr) => 
                 addr.street === form.street &&
                     addr.city === form.city &&
@@ -64,12 +61,13 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
                 
                 if (exists) {
                     console.log("Address already exists");
-                    return;
+                    return ;
                 }
-                else{
-                    setAddresses(res.data);
-                    setForm({street: "", city: "", zip: "", country: ""});
-                }
+                const res = await api.post("/addresses", form, {
+                    headers: {Authorization: `Bearer ${token}`}
+                });
+                setAddresses(res.data);
+                setForm({street: "", city: "", zip: "", country: ""});
 
             }
             catch (error: any) {
@@ -94,13 +92,11 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
                     console.log("Address already exists");
                     return;
                 }
-                else {
-                    const res = await api.post("/addresses", address, {
-                    headers: { Authorization: `Bearer ${token}` }}
-                    );
-                    setAddresses(res.data);
-                }
-
+            
+                const res = await api.post("/addresses", address, {
+                headers: { Authorization: `Bearer ${token}` }}
+                );
+                setAddresses(res.data);
             } catch (error: any) {
                 console.error("Error adding address:", error.message);
             } finally {
