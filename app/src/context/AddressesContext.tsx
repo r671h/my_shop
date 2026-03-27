@@ -66,9 +66,11 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
                     console.log("Address already exists");
                     return;
                 }
+                else{
+                    setAddresses(res.data);
+                    setForm({street: "", city: "", zip: "", country: ""});
+                }
 
-                setAddresses(res.data);
-                setForm({street: "", city: "", zip: "", country: ""});
             }
             catch (error: any) {
                 console.error("Error adding address:", error.message);
@@ -92,12 +94,12 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
                     console.log("Address already exists");
                     return;
                 }
-
-                const res = await api.post("/addresses", address, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-
-                setAddresses(res.data);
+                else {
+                    const res = await api.post("/addresses", address, {
+                    headers: { Authorization: `Bearer ${token}` }}
+                    );
+                    setAddresses(res.data);
+                }
 
             } catch (error: any) {
                 console.error("Error adding address:", error.message);
