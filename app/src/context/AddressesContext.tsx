@@ -60,12 +60,13 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
                 addresses.map((addr) => {
                     console.log(form);
                     
-                    if(form == addr) {
+                    if(JSON.stringify(addr) == JSON.stringify(form)) {
                         console.log("address already exist") 
                         return 0
                     }
                     else {
                         console.log(addr);
+                        console.log(form);
                         
                         next
                     }
