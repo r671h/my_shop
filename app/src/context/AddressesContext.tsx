@@ -9,6 +9,7 @@ import { Address } from "../types";
 type AdressesContextType = {
   addresses: Address[];
   addAddress: () => void;
+  handleAddAddress: (address:Address) => void
   deleteAddress: (id: string) => void;
   form: {street: string, city: string, zip: string, country: string};
   setForm: Dispatch<SetStateAction<{ street: string; city: string; zip: string; country: string; }>>;
@@ -65,6 +66,22 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
                 setLoading(false);
             }
         };
+
+        async function handleAddAddress(address:Address){
+            setLoading(true);
+            try {
+                const res = await api.post("/addresses", address, {
+                    headers: {Authorization: `Bearer ${token}`}
+                });
+                setAddresses(res.data);
+            }
+            catch (error: any) {
+                console.error("Error adding address:", error.message);
+            }
+            finally{
+                setLoading(false);
+            }
+        };
     
         async function deleteAddress(id: string){
             try {
@@ -80,7 +97,7 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
         
 
     return (
-        <AddressContext.Provider value={{ addresses, addAddress, deleteAddress, loading, form, setForm, setLoading }}>
+        <AddressContext.Provider value={{ addresses, addAddress, handleAddAddress, deleteAddress, loading, form, setForm, setLoading }}>
             {children}
         </AddressContext.Provider>
     );
