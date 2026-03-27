@@ -60,7 +60,6 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
                     addr.zip === form.zip);
                 
                 if (exists) {
-                    console.log("Address already exists");
                     return ;
                 }
                 else{
@@ -93,7 +92,6 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
                 );
 
                 if (exists) {
-                    console.log("Address already exists");
                     return;
                 }
                 else{
@@ -102,7 +100,7 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
                     );
                     setAddresses(res.data);
                 }
-                
+
             } catch (error: any) {
                 console.error("Error adding address:", error.message);
             } finally {
