@@ -4,19 +4,31 @@ import Link from "next/link";
 import styles from "./CartDropdown.module.scss";
 import { useCart } from "@/app/src/context/CartContext";
 
-export default function CartDropdown() {
+type Props = {
+  onRequireAuth:() => void,
+  isLoggedIn: boolean;
+}
+
+export default function CartDropdown({isLoggedIn,onRequireAuth}:Props) {
   const { items, totalItems, totalPrice, removeFromCart, updateQuantity } = useCart();
+
+  const handleClick = (e: React.MouseEvent) => {
+    if(!isLoggedIn){
+      e.preventDefault();
+      onRequireAuth();
+    }
+  }
 
   return (
   <div className={styles.wrapper}>
       {/* Mobile — just a link */}
-      <Link href="/pages/cart" className={styles.mobileLink}>
+      <Link href="/pages/cart" className={styles.mobileLink} onClick={handleClick}>
         Cart {totalItems > 0 && <span className={styles.badge}>{totalItems}</span>}
       </Link>
 
       {/* Desktop — full dropdown */}
       <div className={styles.desktopWrapper}>
-        <Link href="/pages/cart">
+        <Link href="/pages/cart" onClick={handleClick}>
           <span className={styles.cartBtn}>
             Cart {totalItems > 0 && <span className={styles.badge}>{totalItems}</span>}
           </span>
@@ -49,7 +61,7 @@ export default function CartDropdown() {
               <p className={styles.total}>
                 Total: <span>${totalPrice.toFixed(2)}</span>
               </p>
-              <Link href="/pages/cart" className={styles.link}>
+              <Link href="/pages/cart" className={styles.link} onClick={handleClick}>
                 Go to Cart
               </Link>
             </>
