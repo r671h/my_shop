@@ -5,10 +5,12 @@ import axios from "axios";
 import { useAuth } from "./AuthConext";
 import { Dispatch,SetStateAction } from "react";
 import { Address } from "../types";
+import next from "next";
 
 type AdressesContextType = {
   addresses: Address[];
   addAddress: () => void;
+  handleAddAddress: (address:Address) => void
   deleteAddress: (id: string) => void;
   form: {street: string, city: string, zip: string, country: string};
   setForm: Dispatch<SetStateAction<{ street: string; city: string; zip: string; country: string; }>>;
@@ -52,11 +54,25 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
         async function addAddress(){
             setLoading(true);
             try {
-                const res = await api.post("/addresses", form, {
+                const exists = addresses.some((addr) => 
+                addr.street === form.street &&
+                    addr.city === form.city &&
+                    addr.zip === form.zip);
+                
+                if (exists) {
+                    console.log("Address already exists");
+                    return ;
+                }
+                else{
+                    const res = await api.post("/addresses", form, {
                     headers: {Authorization: `Bearer ${token}`}
-                });
-                setAddresses(res.data);
+                    });
+                    setAddresses(res.data);
+                }
+
+                
                 setForm({street: "", city: "", zip: "", country: ""});
+
             }
             catch (error: any) {
                 console.error("Error adding address:", error.message);
@@ -65,6 +81,34 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
                 setLoading(false);
             }
         };
+
+        async function handleAddAddress(address: Address) {
+            setLoading(true);
+
+            try {
+                const exists = addresses.some((addr) =>
+                    addr.street === address.street &&
+                    addr.city === address.city &&
+                    addr.zip === address.zip
+                );
+
+                if (exists) {
+                    console.log("Address already exists");
+                    return;
+                }
+                else{
+                    const res = await api.post("/addresses", address, {
+                    headers: { Authorization: `Bearer ${token}` }}
+                    );
+                    setAddresses(res.data);
+                }
+                
+            } catch (error: any) {
+                console.error("Error adding address:", error.message);
+            } finally {
+                setLoading(false);
+            }
+        }
     
         async function deleteAddress(id: string){
             try {
@@ -80,7 +124,7 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
         
 
     return (
-        <AddressContext.Provider value={{ addresses, addAddress, deleteAddress, loading, form, setForm, setLoading }}>
+        <AddressContext.Provider value={{ addresses, addAddress, handleAddAddress, deleteAddress, loading, form, setForm, setLoading }}>
             {children}
         </AddressContext.Provider>
     );

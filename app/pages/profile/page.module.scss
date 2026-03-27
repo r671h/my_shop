@@ -4,11 +4,15 @@
 .main {
   padding: $spacing-xl;
   background-color: $bg-light;
-  min-height: calc(100vh - 110px); // ← subtract header height
+  min-height: calc(100vh - 110px);
   display: flex;
   flex-direction: column;
   gap: $spacing-lg;
-  
+
+  @media (max-width: 640px) {
+    padding: $spacing-md $spacing-sm;
+    gap: $spacing-md;
+  }
 }
 
 .layout {
@@ -119,6 +123,11 @@
   border-radius: $radius;
   padding: $spacing-xl;
   box-shadow: 0 2px 8px $shadow;
+
+  @media (max-width: 640px) {
+    padding: $spacing-md;
+    border-radius: 12px;
+  }
 }
 
 .cardTitle {
@@ -128,6 +137,11 @@
   margin-bottom: $spacing-lg;
   padding-bottom: $spacing-sm;
   border-bottom: 2px solid #e5e7eb;
+
+  @media (max-width: 640px) {
+    font-size: 17px;
+    margin-bottom: $spacing-md;
+  }
 }
 
 .subTitle {
@@ -250,13 +264,17 @@
   padding: $spacing-md 0;
 }
 
-// ─── Orders ────────────────────────────────────────────
+// ─── Orders ────────────────────────────────────────────────────────────────
 .orderList {
   @include flex(column, flex-start, stretch, $spacing-md);
+
+  @media (max-width: 640px) {
+    gap: $spacing-sm;
+  }
 }
 
 .orderItem {
-  @include flex(row, space-between, center, $spacing-md);
+  @include flex(row, space-between, flex-start, $spacing-md);
   padding: $spacing-md $spacing-lg;
   border: 1px solid #e5e7eb;
   border-radius: 10px;
@@ -268,10 +286,20 @@
     border-color: $primary;
     background: white;
   }
+
+  // On mobile: stack vertically
+  @media (max-width: 640px) {
+    flex-direction: column;
+    gap: $spacing-sm;
+    padding: $spacing-sm $spacing-md;
+    border-radius: 12px;
+  }
 }
 
 .orderInfo {
   @include flex(column, flex-start, flex-start, 4px);
+  flex: 1;
+  min-width: 0; 
 
   .orderDate {
     font-size: 12px;
@@ -294,12 +322,39 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
+    // On mobile: allow full wrap so nothing is hidden
+    @media (max-width: 640px) {
+      max-width: 100%;
+      white-space: normal;
+      line-height: 1.4;
+    }
   }
 }
 
 .orderRight {
   @include flex(row, flex-end, center, $spacing-md);
   flex-shrink: 0;
+
+  // On mobile: stretch full width, put address on left, total on right
+  @media (max-width: 640px) {
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: $spacing-sm;
+    border-top: 1px solid #f1f5f9;
+  }
+}
+
+// Address text shown only on mobile (inside orderRight)
+.orderAddress {
+  font-size: 12px;
+  color: $text-gray;
+  display: none;
+
+  @media (max-width: 640px) {
+    display: block;
+  }
 }
 
 .orderTotal {
@@ -307,4 +362,8 @@
   font-weight: 700;
   color: $primary;
   white-space: nowrap;
+
+  @media (max-width: 640px) {
+    font-size: 16px;
+  }
 }

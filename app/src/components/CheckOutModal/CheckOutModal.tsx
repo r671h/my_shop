@@ -17,8 +17,8 @@ type Props = {
 
 export default function CheckoutModal({ isOpen, onClose }: Props) {
   const { items, totalPrice, clearCart } = useCart();
-  const { addresses } = useAddress();
-  const { order,setOrder, handleAddOrder } = useOrders();
+  const { addresses,handleAddAddress } = useAddress();
+  const { order, handleAddOrder } = useOrders();
   const { user } = useAuth();
 
   const [step, setStep] = useState<Step>("delivery");
@@ -100,6 +100,7 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
       createdAt: new Date().toString(),
     };
 
+    await handleAddAddress(address);
     await handleAddOrder(newOrder);
     await clearCart();
     setSubmitted(true);
