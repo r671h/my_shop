@@ -64,7 +64,11 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
                         console.log("address already exist") 
                         return 0
                     }
-                    else next
+                    else {
+                        console.log(addr);
+                        
+                        next
+                    }
                 })
                 setAddresses(res.data);
                 setForm({street: "", city: "", zip: "", country: ""});
@@ -88,7 +92,11 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
                         console.log("address already exist") 
                         return 0
                     }
-                    else next
+                    else {
+                        console.log(addr);
+                        
+                        next
+                    }
                 })
                 setAddresses(res.data);
             }
