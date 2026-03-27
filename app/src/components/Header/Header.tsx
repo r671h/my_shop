@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import styles from "./Header.module.scss";
 import CartDropdown from "../CartDropdown/CartDropdown";
-import AuthModal from "../AuthModal/AuthModal";
+import AuthPromptModal from "../AuthModal/AuthModal";
 import { useAuth } from "../../context/AuthConext";
 
 export default function Header() {
@@ -13,11 +13,11 @@ export default function Header() {
 
   const handleCartClick = (e: React.MouseEvent) => {
     if (!isLoggedIn) {
-      e.preventDefault();      
+      e.preventDefault();       
       e.stopPropagation();
       setShowAuthPrompt(true);
     }
-
+  
   };
 
   return (
@@ -42,9 +42,19 @@ export default function Header() {
             <Link href="/pages/auth/login" className={styles.link}>Login</Link>
           )}
 
-          {isLoggedIn ? <CartDropdown/> : <AuthModal onClose={()=>setShowAuthPrompt(false)} isOpen={showAuthPrompt}/>}
+          <div
+            onClick={handleCartClick}
+            style={!isLoggedIn ? { cursor: "pointer" } : undefined}
+          >
+            <CartDropdown />
+          </div>
         </nav>
       </header>
+
+      <AuthPromptModal
+        isOpen={showAuthPrompt}
+        onClose={() => setShowAuthPrompt(false)}
+      />
     </>
   );
 }
