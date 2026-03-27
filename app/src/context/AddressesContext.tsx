@@ -5,6 +5,7 @@ import axios from "axios";
 import { useAuth } from "./AuthConext";
 import { Dispatch,SetStateAction } from "react";
 import { Address } from "../types";
+import next from "next";
 
 type AdressesContextType = {
   addresses: Address[];
@@ -56,6 +57,15 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
                 const res = await api.post("/addresses", form, {
                     headers: {Authorization: `Bearer ${token}`}
                 });
+                addresses.map((addr) => {
+                    console.log(form);
+                    
+                    if(form == addr) {
+                        console.log("address already exist") 
+                        return 0
+                    }
+                    else next
+                })
                 setAddresses(res.data);
                 setForm({street: "", city: "", zip: "", country: ""});
             }
@@ -73,6 +83,13 @@ export function AddressProvider({ children }: { children: React.ReactNode }) {
                 const res = await api.post("/addresses", address, {
                     headers: {Authorization: `Bearer ${token}`}
                 });
+                addresses.map((addr) => {
+                    if(address == addr) {
+                        console.log("address already exist") 
+                        return 0
+                    }
+                    else next
+                })
                 setAddresses(res.data);
             }
             catch (error: any) {
