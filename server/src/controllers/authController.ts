@@ -29,7 +29,7 @@ export async function login(req: Request, res: Response) {
     const { email, password } = req.body;
     console.log(email);
     
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email,password });
     if (!user) {
       return res.status(404).json({ error: "Password or email is incorrect" });
     }
