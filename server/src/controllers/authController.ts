@@ -29,9 +29,15 @@ export async function login(req: Request, res: Response) {
     const { email, password } = req.body;
     console.log(email);
     
-    const user = await User.findOne({ email,password });
+    const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ error: "Password or email is incorrect" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if(!isMatch){
+      return res.status(401).json({ error: "Password or email is incorrect"})
     }
 
     const token = jwt.sign(
