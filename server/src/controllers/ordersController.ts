@@ -5,7 +5,6 @@ import { User } from "../models/User";
 
 export async function getOrders(req: Request,res: Response){
     try {
-        await connectDB();
         const user = await User.findById((req as any).userId);
         if (!user) {
             return res.status(404).json({message: "User not found"});
@@ -19,7 +18,6 @@ export async function getOrders(req: Request,res: Response){
 
 export async function addOrder(req: Request,res: Response){
     try {
-        await connectDB();
         const {items,total,address,createdAt} = req.body;
         const user = await User.findByIdAndUpdate(
             (req as any).userId,
@@ -36,7 +34,6 @@ export async function addOrder(req: Request,res: Response){
 
 export async function deleteOrder(req: Request,res: Response){
     try {
-        await connectDB();
         const user = await User.findByIdAndUpdate(
             (req as any).userId,
             {$pull: {orders: {_id: req.params.id}}},

@@ -4,7 +4,6 @@ import { User } from "../models/User";
 
 export async function getCart(req: Request,res: Response){
     try {
-        await connectDB();
         const user = await User.findById((req as any).userId);
         if (!user) return res.status(404).json({message: "User not found"});
         res.json({items: user.cart});
@@ -16,7 +15,6 @@ export async function getCart(req: Request,res: Response){
 
 export async function addToCart(req: Request,res: Response){
     try {
-        await connectDB();
 
         const { productId, title, price, image } = req.body;
 
@@ -42,7 +40,6 @@ export async function addToCart(req: Request,res: Response){
 
 export async function removeFromCart(req: Request,res: Response){
     try {
-        await connectDB();
         const user = await User.findById((req as any).userId);
         if (!user) return res.status(404).json({message: "User not found"});
         
@@ -59,7 +56,6 @@ export async function removeFromCart(req: Request,res: Response){
 
 export async function updateQuantity(req: Request,res: Response){
     try {
-        await connectDB();
         const productId = Number(req.params.productId);
         const { quantity } = req.body;
         console.log(quantity);
@@ -86,7 +82,6 @@ export async function updateQuantity(req: Request,res: Response){
 
 export async function clearCart(req:Request,res:Response){
     try{
-        await connectDB();
         const user = await User.findById((req as any).userId);
         if(!user) return(res.status(404).json({ error: "user not found"}));
 
