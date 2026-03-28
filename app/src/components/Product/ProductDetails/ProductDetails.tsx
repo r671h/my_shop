@@ -43,6 +43,7 @@ export default function ProductDetails({ product }: { product: Product }) {
           >Add to Cart</button>
         </div>
       </div>
+      <AuthModal isOpen={showAuthPrompt} onClose={() => setAuthPrompt(false)} />
     </main>
   );
 }
