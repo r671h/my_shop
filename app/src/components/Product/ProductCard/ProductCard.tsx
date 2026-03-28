@@ -27,7 +27,7 @@ export default function ProductCard({product} : Props) {
       setShowAuthPrompt(true);
     };
     isInCart(product!.id) ? updateQuantity(product!.id, quantity+1) : addToCart(product!);
-
+  };
   return (
     
       <div className={styles.card}>
@@ -49,5 +49,4 @@ export default function ProductCard({product} : Props) {
       </div>
     
   );
-}
 }
