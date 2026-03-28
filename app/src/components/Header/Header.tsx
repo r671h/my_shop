@@ -4,8 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import styles from "./Header.module.scss";
 import CartDropdown from "../CartDropdown/CartDropdown";
-import AuthPromptModal from "../AuthModal/AuthModal";
 import { useAuth } from "../../context/AuthConext";
+import AuthModal from "../AuthModal/AuthModal";
 
 export default function Header() {
   const { isLoggedIn, logOut, user } = useAuth();
@@ -23,7 +23,9 @@ export default function Header() {
   return (
     <>
       <header className={styles.header}>
-        <div className={styles.logo}>MyShop</div>
+        <Link href="/" className={styles.link}>
+          <div className={styles.logo}>MyShop</div>
+        </Link>
 
         <nav className={styles.nav}>
           <Link href="/" className={styles.link}>Home</Link>
@@ -51,7 +53,7 @@ export default function Header() {
         </nav>
       </header>
 
-      <AuthPromptModal
+      <AuthModal
         isOpen={showAuthPrompt}
         onClose={() => setShowAuthPrompt(false)}
       />
