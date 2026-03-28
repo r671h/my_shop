@@ -43,7 +43,7 @@ export default function CheckoutModal({ isOpen, onClose }: Props) {
     cardHolder: "",
   });
 
-  if (!isOpen) return null;
+  if (!isOpen && !submitted) return null;
 
   const validateDelivery = () => {
     const e: Record<string, string> = {};
