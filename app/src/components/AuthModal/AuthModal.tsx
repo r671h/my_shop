@@ -9,7 +9,7 @@ type Props = {
   onClose: () => void;
 };
 
-export default function AuthPromptModal({ isOpen, onClose }: Props) {
+export default function AuthModal({ isOpen, onClose }: Props) {
   const router = useRouter();
 
   useEffect(() => {
