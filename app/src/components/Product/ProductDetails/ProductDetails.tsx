@@ -3,9 +3,26 @@
 import { useCart } from "@/app/src/context/CartContext";
 import styles from "./ProductDetails.module.scss";
 import { Product } from "@/app/src/types";
+import { useAuth } from "@/app/src/context/AuthConext";
+import React, { useState } from "react";
+import AuthModal from "../../AuthModal/AuthModal";
 
 export default function ProductDetails({ product }: { product: Product }) {
+
+    const { isLoggedIn } = useAuth();
+    const [showAuthPrompt, setAuthPrompt] = useState(false);
+
     const { addToCart } = useCart();
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    if (!isLoggedIn) {
+      e.preventDefault();
+      e.stopPropagation();
+      setAuthPrompt(true);
+      return;
+    }
+    addToCart(product);
+  };
 
    return (
     <main className={styles.main}>
@@ -22,7 +39,7 @@ export default function ProductDetails({ product }: { product: Product }) {
           <p className={styles.price}>${product.price}</p>
           <button 
           className={styles.button}
-          onClick = {() => addToCart(product)}
+          onClick = {handleAddToCart}
           >Add to Cart</button>
         </div>
       </div>
