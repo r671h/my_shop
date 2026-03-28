@@ -45,11 +45,9 @@ export default function ProductCard({product} : Props) {
           onClick = {handleClick}
           >Add to Cart
         </button>
+        <AuthModal isOpen={showAuthPrompt} onClose={() => setShowAuthPrompt(false)} />
       </div>
     
   );
 }
-{showAuthPrompt && (
-  <AuthModal isOpen={showAuthPrompt} onClose={() => setShowAuthPrompt(false)} />
-)}
 }
