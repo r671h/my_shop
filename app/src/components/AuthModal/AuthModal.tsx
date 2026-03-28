@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import styles from "./AuthModal.module.scss";
 
@@ -38,7 +39,7 @@ export default function AuthModal({ isOpen, onClose }: Props) {
     router.push("/pages/auth/register");
   };
 
-  return (
+  return createPortal(
     <div
       className={styles.overlay}
       onClick={(e) => e.target === e.currentTarget && onClose()}
@@ -73,6 +74,7 @@ export default function AuthModal({ isOpen, onClose }: Props) {
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
