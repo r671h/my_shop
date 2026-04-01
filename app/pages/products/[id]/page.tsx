@@ -10,7 +10,7 @@ type Props = {
 
 export default function ProductPage({ params }: Props) {
   const { id } =  use(params); 
-  const {product,loading,error} = useProduct(Number(id))
+  const {product,loading,error} = useProduct(id)
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;

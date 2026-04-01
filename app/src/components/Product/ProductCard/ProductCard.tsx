@@ -17,7 +17,7 @@ export default function ProductCard({product} : Props) {
   const [showAuthPrompt, setShowAuthPrompt] = useState(false);
 
   const { addToCart, isInCart, updateQuantity, items } = useCart();
-  const cartItem = items.find(i => i.productId === product!.id);
+  const cartItem = items.find(i => i.productId === product!._id);
   const quantity = cartItem ? cartItem.quantity : 0;
 
   const handleClick = (e : React.MouseEvent) => {
@@ -26,12 +26,12 @@ export default function ProductCard({product} : Props) {
       e.stopPropagation();
       setShowAuthPrompt(true);
     };
-    isInCart(product!.id) ? updateQuantity(product!.id, quantity+1) : addToCart(product!);
+    isInCart(product!._id) ? updateQuantity(product!._id, quantity+1) : addToCart(product!);
   };
   return (
     
       <div className={styles.card}>
-        <Link href={`/pages/products/${product!.id}/`} className={styles.card}>
+        <Link href={`/pages/products/${product!._id}/`} className={styles.card}>
         <img
           src={product!.image}
           alt={product!.title}

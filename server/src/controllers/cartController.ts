@@ -43,7 +43,7 @@ export async function removeFromCart(req: Request,res: Response){
         const user = await User.findById((req as any).userId);
         if (!user) return res.status(404).json({message: "User not found"});
         
-        const productId = Number(req.params.productId);
+        const productId = req.params.productId;
         user.cart = user.cart.filter((item:any) => item.productId !== productId);
         await user.save();
         res.json({items : user.cart});
@@ -56,7 +56,7 @@ export async function removeFromCart(req: Request,res: Response){
 
 export async function updateQuantity(req: Request,res: Response){
     try {
-        const productId = Number(req.params.productId);
+        const productId = req.params.productId;
         const { quantity } = req.body;
         console.log(quantity);
         

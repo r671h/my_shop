@@ -1,5 +1,5 @@
 export type Product = {
-    id:number,
+    _id:string,
     title:string,
     price:number,
     image:string,
@@ -24,7 +24,7 @@ export type Order = {
 };
 
 export type CartItem = {
-    productId: number;
+    productId: string;
     title: string;
     price: number;
     image: string;
