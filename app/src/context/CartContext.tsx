@@ -9,10 +9,10 @@ import { useAuth } from "./AuthConext";
 type CartContextType = {
   items: CartItem[];
   addToCart: (product: Product) => void;
-  removeFromCart: (productId: number) => void;
-  updateQuantity: (productId: number, quantity: number) => void;
+  removeFromCart: (productId: string) => void;
+  updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
-  isInCart: (id: number) => boolean;
+  isInCart: (id: string) => boolean;
   totalPrice: number;
   totalItems: number;
 };
@@ -51,7 +51,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     const addToCart = async (product: Product) => {
         try{
             const res = await api.post("/cart", {
-                productId: product.id,
+                productId: product._id,
                 title: product.title,
                 price: product.price,
                 image: product.image
@@ -67,7 +67,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         }
     };
 
-    const removeFromCart = async (productId: number) => {
+    const removeFromCart = async (productId: string) => {
         try {
             
             const res = await api.delete(`/cart/${productId}`, {
@@ -81,7 +81,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         }
     };
 
-    const updateQuantity = async (productId: number, quantity: number) => {
+    const updateQuantity = async (productId: string, quantity: number) => {
         try {
             const res = await api.put(`/cart/${productId}`, { quantity }, {
                 headers: { Authorization: `Bearer ${token}`}
@@ -106,7 +106,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         }
     }
 
-     const isInCart = (id:number) => {
+     const isInCart = (id:string) => {
         return items.some(i => i.productId === id);
     }
 

@@ -6,6 +6,7 @@ import authRoute from "./routes/authRoute";
 import addressRoute from "./routes/addressRoute";
 import cartRoute from "./routes/cartRoute";
 import orderRoute from "./routes/orderRoute";
+import productsRoute from "./routes/productsRoute";
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use("/api/cart", cartRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/addresses", addressRoute);
 app.use("/api/orders", orderRoute)
+app.use("/api/products", productsRoute)
 
 connectDB();
 

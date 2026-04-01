@@ -2,12 +2,13 @@ import { Product } from "../types";
 import axios from "axios"
 
 const api = axios.create({
-    baseURL: "https://fakestoreapi.com"
+    baseURL: process.env.NEXT_PUBLIC_API_URL
 });
 
 export async function getProducts(): Promise<Product[]> {
     try
-        {const res = await api.get<Product[]>("/products");
+        {
+        const res = await api.get<Product[]>("/products");
         return res.data;
     } catch(e: any) {
         console.error(`Error `,e.message)
@@ -15,9 +16,9 @@ export async function getProducts(): Promise<Product[]> {
     }
 }
 
-export async function getProduct(id:Number): Promise<Product | null> {
+export async function getProduct(id: string): Promise<Product | null> {
     try
-        {const res = await api.get(`/products/${id}`)
+        {const res = await api.get<Product>(`/products/${id}`)
         return res.data; 
     } catch(e: any) {
         console.error(`Error `,e.message)
