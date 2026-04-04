@@ -5,7 +5,7 @@ import axios from "axios";
 import useSWR from "swr";
 
 const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
 const fetcher = (url: string) => api.get<Product[]>(url).then(res => res.data);

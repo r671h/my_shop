@@ -10,7 +10,7 @@ export default function Productlist(){
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");
 
-  const {products, loading} = useProducts();
+  const {products=[], loading, error} = useProducts();
 
   const categories = ["all", ...Array.from(new Set(products.map((p) => p.category)))];
 
