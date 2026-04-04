@@ -18,7 +18,7 @@ export function useProducts(){
     });
 
     return {
-        products: data,
+        products: data ?? [],
         loading: isLoading,
         error: error?.message || null
     };
