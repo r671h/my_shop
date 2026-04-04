@@ -20,7 +20,7 @@ export function useProduct(id : string){
 
     return {
         product: data,
-        loading: isLoading,
+        loading: false,
         error: error?.message || null
     };
 }
