@@ -1,27 +1,26 @@
 import { useEffect, useState } from "react";
 import { Product } from "../types";
 import { getProduct } from "../api/api";
+import axios from "axios";
+import useSWR from "swr";
+
+const api = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_API_BASE_URL
+})
+
+const fetcher = (url: string) => api.get<Product>(url).then(res => res.data);
 
 export function useProduct(id : string){
-    const [product,setProduct] = useState<Product | null>();
-    const [loading,setLoading] = useState(true);
-    const [error,setError] = useState<string | null>(null);
+    const { data, error, isLoading } = useSWR(
+        id ? `/products/${id}` : null, 
+        fetcher, {
+        revalidateOnFocus: false,
+        refreshInterval: 60000
+    });
 
-    useEffect(()=>{
-        if(!id){
-            return;
-        }
-        getProduct(id)
-        .then((data)=>{
-            setProduct(data);
-        })
-        .catch((e)=>{
-            setError(e.message);
-        })
-        .finally(() => {
-            setLoading(false);
-        })
-    },[id])
-
-    return {product,loading,error};
+    return {
+        product: data,
+        loading: isLoading,
+        error: error?.message || null
+    };
 }
