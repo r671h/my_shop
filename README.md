@@ -8,7 +8,7 @@ Frontend Framework: Next.js (App Router) – Utilizing Server Components for fas
 
 Language: TypeScript – Ensuring type safety, reducing bugs, and improving code maintainability.
 
-Styling: Tailwind CSS – For a clean, utility-first design that is fully responsive across all device sizes.
+Styling: SCSS – For a clean, utility-first design that is fully responsive across all device sizes.
 
 State Management: Zustand (or Redux/React Context) – To handle the shopping cart state and user preferences efficiently.
 
