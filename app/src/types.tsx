@@ -4,7 +4,12 @@ export type Product = {
     price:number,
     image:string,
     description:string,
-    category:string
+    category:string,
+    reviews: Review[]
+    rating?: {
+        rate: number;
+        count: number;
+    }
 };
 
 export type Address = {
@@ -31,3 +36,11 @@ export type CartItem = {
     quantity: number;
 };
 
+export type Review = {
+    _id: string;
+    userId: string;
+    userName: string;
+    rating: number;
+    comment: string;
+    createdAt: string;
+}

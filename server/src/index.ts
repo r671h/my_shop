@@ -7,6 +7,7 @@ import addressRoute from "./routes/addressRoute";
 import cartRoute from "./routes/cartRoute";
 import orderRoute from "./routes/orderRoute";
 import productsRoute from "./routes/productsRoute";
+import reviewRoute from "./routes/reviewRoute";
 
 dotenv.config();
 
@@ -24,9 +25,10 @@ app.use("/api/auth", authRoute);
 app.use("/api/addresses", addressRoute);
 app.use("/api/orders", orderRoute)
 app.use("/api/products", productsRoute)
+app.use("/api/reviews", reviewRoute)
 
 connectDB();
-
+  
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
