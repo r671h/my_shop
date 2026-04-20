@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useReviews } from "@/app/src/hooks/useReviews";
-import { useAuth } from "@/app/src/context/AuthConext";
+import { useAuth } from "../../context/AuthConext";
 import axios from "axios";
 import styles from "./Reviews.module.scss";
 
