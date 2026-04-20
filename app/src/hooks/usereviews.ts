@@ -13,7 +13,7 @@ export function useReviews(productId: string) {
         fetcher, 
     {
         revalidateOnFocus: false
-    });
+    }); 
 
     return {
         reviews: data ?? [],
