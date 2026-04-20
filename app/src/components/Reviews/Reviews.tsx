@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useReviews } from "../../hooks/useReviews";
+import { useReviews2 } from "../../hooks/useReviews2";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import styles from "./Reviews.module.scss";
@@ -15,7 +15,7 @@ type Props = {
 };
 
 export default function Reviews({ productId }: Props) {
-  const { reviews, loading, mutate } = useReviews(JSON.stringify(productId));
+  const { reviews, loading, mutate } = useReviews2(JSON.stringify(productId));
   const { token, user, isLoggedIn } = useAuth();
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");

@@ -8,7 +8,7 @@ const api = axios.create({
 
 const fetcher = (url: string) => api.get<Review[]>(url).then(res => res.data);
 
-export function useReviews(productId: string) {
+export function useReviews2(productId: string) {
     const { data, error, isLoading, mutate } = useSWR(productId ? `/products/${productId}/reviews` : null, 
         fetcher, 
     {
