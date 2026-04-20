@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useReviews } from "@/app/src/hooks/useReviews";
+import { useReviews } from "../../hooks/useReviews";
 import { useAuth } from "../../context/AuthConext";
 import axios from "axios";
 import styles from "./Reviews.module.scss";
