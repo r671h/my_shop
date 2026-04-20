@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import styles from "./Header.module.scss";
 import CartDropdown from "../CartDropdown/CartDropdown";
-import { useAuth } from "../../context/AuthConext";
+import { useAuth } from "../../context/AuthContext";
 import AuthModal from "../AuthModal/AuthModal";
 
 export default function Header() {

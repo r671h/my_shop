@@ -3,7 +3,7 @@
 import axios from "axios";
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { createContext } from "react";
-import { useAuth } from "./AuthConext";
+import { useAuth } from "./AuthContext";
 import { Order } from "../types";
 import { CartItem } from "../types";
 

@@ -5,7 +5,7 @@ import Link from "next/dist/client/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import styles from "./page.module.scss";
-import { useAuth } from "@/app/src/context/AuthConext";
+import { useAuth } from "@/app/src/context/AuthContext";
 
 
 export default function LoginPage() {

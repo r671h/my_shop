@@ -3,7 +3,7 @@
 import { useCart } from "@/app/src/context/CartContext";
 import styles from "./ProductDetails.module.scss";
 import { Product } from "@/app/src/types";
-import { useAuth } from "@/app/src/context/AuthConext";
+import { useAuth } from "@/app/src/context/AuthContext";
 import React, { useState } from "react";
 import AuthModal from "../../AuthModal/AuthModal";
 import Reviews from "../../Reviews/Reviews";

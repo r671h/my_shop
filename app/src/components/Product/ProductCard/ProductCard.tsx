@@ -4,7 +4,7 @@ import styles from "./ProductCard.module.scss";
 import Link from "next/link";
 import { useCart } from "@/app/src/context/CartContext";
 import AuthModal from "../../AuthModal/AuthModal";
-import { useAuth } from "@/app/src/context/AuthConext";
+import { useAuth } from "@/app/src/context/AuthContext";
 import { useState } from "react";
 
 type Props = {

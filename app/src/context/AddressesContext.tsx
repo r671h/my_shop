@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { useAuth } from "./AuthConext";
+import { useAuth } from "./AuthContext";
 import { Dispatch,SetStateAction } from "react";
 import { Address } from "../types";
 import next from "next";
