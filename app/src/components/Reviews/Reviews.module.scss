@@ -1,0 +1,197 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.wrapper {
+  margin-top: $spacing-xl;
+}
+
+.title {
+  font-size: 22px;
+  font-weight: 700;
+  color: $text-dark;
+  margin-bottom: $spacing-lg;
+  padding-bottom: $spacing-sm;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.empty {
+  color: $text-gray;
+  font-size: 15px;
+  margin-bottom: $spacing-lg;
+}
+
+.list {
+  @include flex(column, flex-start, stretch, $spacing-md);
+  margin-bottom: $spacing-xl;
+}
+
+.review {
+  background: white;
+  border-radius: $radius;
+  padding: $spacing-md;
+  box-shadow: 0 2px 8px $shadow;
+}
+
+.reviewHeader {
+  @include flex(row, space-between, center, 0);
+  margin-bottom: $spacing-sm;
+}
+
+.reviewLeft {
+  @include flex(row, flex-start, center, $spacing-sm);
+}
+
+.reviewRight {
+  @include flex(row, flex-start, center, $spacing-sm);
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: $primary;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  @include flex(row, center, center, 0);
+  flex-shrink: 0;
+}
+
+.reviewName {
+  font-size: 14px;
+  font-weight: 600;
+  color: $text-dark;
+}
+
+.reviewDate {
+  font-size: 12px;
+  color: $text-gray;
+}
+
+.stars {
+  color: #f59e0b;
+  font-size: 16px;
+  letter-spacing: 2px;
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  color: #ef4444;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 2px 6px;
+  border-radius: 4px;
+
+  &:hover {
+    background: #fee2e2;
+  }
+}
+
+.reviewComment {
+  font-size: 14px;
+  color: $text-gray;
+  line-height: 1.6;
+}
+
+// ─── Form ──────────────────────────────────────────
+.form {
+  background: white;
+  border-radius: $radius;
+  padding: $spacing-xl;
+  box-shadow: 0 2px 8px $shadow;
+}
+
+.formTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: $text-dark;
+  margin-bottom: $spacing-md;
+}
+
+.error {
+  font-size: 13px;
+  color: #ef4444;
+  margin-bottom: $spacing-sm;
+}
+
+.ratingPicker {
+  @include flex(row, flex-start, center, 4px);
+  margin-bottom: $spacing-md;
+}
+
+.star {
+  background: none;
+  border: none;
+  font-size: 28px;
+  color: #d1d5db;
+  cursor: pointer;
+  transition: color 0.15s;
+  padding: 0;
+
+  &:hover {
+    color: #f59e0b;
+  }
+}
+
+.starActive {
+  color: #f59e0b;
+}
+
+.textarea {
+  width: 100%;
+  padding: $spacing-sm $spacing-md;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  resize: vertical;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+  margin-bottom: $spacing-md;
+
+  &:focus {
+    border-color: $primary;
+  }
+}
+
+.submitBtn {
+  background-color: $primary;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: $spacing-sm $spacing-xl;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: $primary-dark;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.loginPrompt {
+  font-size: 14px;
+  color: $text-gray;
+  padding: $spacing-md;
+  background: white;
+  border-radius: $radius;
+  text-align: center;
+
+  a {
+    color: $primary;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
