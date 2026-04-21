@@ -53,11 +53,11 @@ export async function deleteReview(req: Request,res: Response){
         const product = await Product.findById(req.params.id);
         if(!product) return res.status(404).json({message: "Product not found"});
 
-        product.reviews = product.reviews.filter((r: any) => r._id !== req.params.reviewId);
+        product.reviews = product.reviews.filter((r: any) => r._id.toString() !== req.params.reviewId);
         
         //upadate rating
         if(product.reviews.length > 0){
-            const totalRating = product.reviews.reduce((acc: Number, r: any) => acc + r.rating, 0);
+            const totalRating = product.reviews.reduce((acc: number, r: any) => acc + r.rating, 0);
             product.rating.rate = Math.round((totalRating / product.reviews.length) * 10) / 10;
             product.rating.count = product.reviews.length;
         } else {
