@@ -51,8 +51,8 @@ export default function Reviews({ productId }: Props) {
       });
       mutate();
       console.log("review.userId:", reviews[0].userId);
-    console.log("user.id:", (user as any).id);
-    console.log("user._id:", (user as any)._id);
+      console.log("user.id:", (user as any).id);
+      console.log("user._id:", (user as any)._id);
     } catch (e: any) {
       console.error("Error deleting review:", e.message);
     }
