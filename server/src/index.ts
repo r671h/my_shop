@@ -25,7 +25,7 @@ app.use("/api/auth", authRoute);
 app.use("/api/addresses", addressRoute);
 app.use("/api/orders", orderRoute)
 app.use("/api/products", productsRoute)
-app.use("/api/reviews", reviewRoute)
+app.use("/api/products", reviewRoute)
 
 connectDB();
   
