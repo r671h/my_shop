@@ -15,7 +15,7 @@ type Props = {
 };
 
 export default function Reviews({ productId }: Props) {
-  const { reviews, loading, mutate } = useReviews2(JSON.stringify(productId));
+  const { reviews, loading, mutate } = useReviews2(productId);
   const { token, user, isLoggedIn } = useAuth();
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
