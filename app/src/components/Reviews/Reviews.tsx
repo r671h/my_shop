@@ -50,6 +50,9 @@ export default function Reviews({ productId }: Props) {
         headers: { Authorization: `Bearer ${token}` },
       });
       mutate();
+      console.log("review.userId:", reviews[0].userId);
+    console.log("user.id:", (user as any).id);
+    console.log("user._id:", (user as any)._id);
     } catch (e: any) {
       console.error("Error deleting review:", e.message);
     }
@@ -65,12 +68,12 @@ export default function Reviews({ productId }: Props) {
         Reviews ({reviews.length})
       </h2>
 
-      {/* Review list */}
       {reviews.length === 0 ? (
         <p className={styles.empty}>No reviews yet. Be the first!</p>
       ) : (
         <div className={styles.list}>
           {reviews.map((review) => (
+            
             <div key={review._id} className={styles.review}>
               <div className={styles.reviewHeader}>
                 <div className={styles.reviewLeft}>
@@ -84,7 +87,7 @@ export default function Reviews({ productId }: Props) {
                 </div>
                 <div className={styles.reviewRight}>
                   <span className={styles.stars}>{stars(review.rating)}</span>
-                  {user && review.userId === (user as any).id && (
+                  {user && (review.userId === (user as any).id || review.userId === (user as any)._id) && (
                     <button
                       className={styles.deleteBtn}
                       onClick={() => handleDelete(review._id)}
