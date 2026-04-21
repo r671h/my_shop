@@ -3,9 +3,11 @@
 import { useCart } from "@/app/src/context/CartContext";
 import styles from "./ProductDetails.module.scss";
 import { Product } from "@/app/src/types";
-import { useAuth } from "@/app/src/context/AuthConext";
+import { useAuth } from "@/app/src/context/AuthContext";
 import React, { useState } from "react";
 import AuthModal from "../../AuthModal/AuthModal";
+import Reviews from "../../Reviews/Reviews";
+
 
 export default function ProductDetails({ product }: { product: Product }) {
 
@@ -43,7 +45,9 @@ export default function ProductDetails({ product }: { product: Product }) {
           >Add to Cart</button>
         </div>
       </div>
+      <Reviews productId={product._id} />
       <AuthModal isOpen={showAuthPrompt} onClose={() => setAuthPrompt(false)} />
+
     </main>
   );
 }

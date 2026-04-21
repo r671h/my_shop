@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuth } from "@/app/src/context/AuthConext";
+import { useAuth } from "@/app/src/context/AuthContext";
 import styles from "./page.module.scss";
 import Addresses from "@/app/src/components/Profile/Addresses/Addresses";
 import PersonalInfo from "@/app/src/components/Profile/PersonalInfo/PersonalInfo";

@@ -1,5 +1,5 @@
 import styles from "@/app/pages/profile/page.module.scss";
-import { useAuth } from "@/app/src/context/AuthConext";
+import { useAuth } from "@/app/src/context/AuthContext";
 import { useOrders } from "@/app/src/context/OrdersContext";
 import { useEffect } from "react";
 

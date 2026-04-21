@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
 import { Product } from "../types";
-import { getProducts } from "../api/api";
 import axios from "axios";
 import useSWR from "swr";
 

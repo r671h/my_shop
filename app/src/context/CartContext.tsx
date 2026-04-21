@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { CartItem, Product } from "../types";
 import axios from "axios";
-import { useAuth } from "./AuthConext";
+import { useAuth } from "./AuthContext";
 
 
 type CartContextType = {
