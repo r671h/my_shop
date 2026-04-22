@@ -1,6 +1,6 @@
 import styles from "./ProductSkeleton.module.scss";
 
-export default function ProductSkeleton() {
+export default function ProductsSkeleton() {
   return (
     <div className={styles.card}>
       <div className={styles.image} />

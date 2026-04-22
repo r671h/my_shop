@@ -5,7 +5,7 @@ import ProductGrid from "../ProductGrid/ProductGrid";
 import Sidebar from "../../SideBar/SideBar";
 import styles from "./ProductList.module.scss";
 import { useProducts } from "@/app/src/hooks/useProducts";
-import ProductSkeleton from "../../Skeleton/ProductSkeleton";
+import ProductsSkeleton from "../../Skeleton/ProductsSkeleton/ProductsSkeleton";
 
 export default function Productlist(){
   const [search, setSearch] = useState("");
@@ -29,7 +29,7 @@ export default function Productlist(){
         <div className={styles.searchSkeleton} />
         <div className={styles.grid}>
           {Array.from({ length: 8 }).map((_, i) => (
-            <ProductSkeleton key={i} />
+            <ProductsSkeleton key={i} />
           ))}
         </div>
       </div>
