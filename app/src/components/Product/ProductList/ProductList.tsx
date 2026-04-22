@@ -5,6 +5,7 @@ import ProductGrid from "../ProductGrid/ProductGrid";
 import Sidebar from "../../SideBar/SideBar";
 import styles from "./ProductList.module.scss";
 import { useProducts } from "@/app/src/hooks/useProducts";
+import ProductsSkeleton from "../../Skeleton/ProductsSkeleton/ProductsSkeleton";
 
 export default function Productlist(){
   const [search, setSearch] = useState("");
@@ -20,8 +21,21 @@ export default function Productlist(){
     return matchesSearch && matchesCategory;
   });
 
-  if (loading) return <p>Loading products...</p>;
-
+  if (loading) {
+  return (
+    <div className={styles.layout}>
+      <div className={styles.sidebarSkeleton} />
+      <div className={styles.content}>
+        <div className={styles.searchSkeleton} />
+        <div className={styles.grid}>
+          {Array.from({ length: 8 }).map((_, i) => (
+            <ProductsSkeleton key={i} />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
   return (
     <div className={styles.layout}>
       <Sidebar

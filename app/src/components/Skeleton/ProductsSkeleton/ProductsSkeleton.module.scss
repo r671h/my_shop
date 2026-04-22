@@ -1,0 +1,56 @@
+@use "../../../styles/variables" as *;
+
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+
+%skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 6px;
+}
+
+.card {
+  background: white;
+  border-radius: $radius;
+  padding: $spacing-md;
+  box-shadow: 0 2px 8px $shadow;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+}
+
+.image {
+  @extend %skeleton;
+  height: 150px;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.title {
+  @extend %skeleton;
+  height: 16px;
+  width: 90%;
+}
+
+.titleShort {
+  @extend %skeleton;
+  height: 16px;
+  width: 60%;
+}
+
+.price {
+  @extend %skeleton;
+  height: 20px;
+  width: 40%;
+}
+
+.button {
+  @extend %skeleton;
+  height: 38px;
+  width: 100%;
+  border-radius: 8px;
+  margin-top: $spacing-sm;
+}

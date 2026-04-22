@@ -1,5 +1,5 @@
 import axios from "axios";
-import useSWR, { mutate } from "swr";
+import useSWR from "swr";
 import { Review } from "../types";
 
 const api = axios.create({

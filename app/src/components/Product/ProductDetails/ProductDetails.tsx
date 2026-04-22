@@ -8,7 +8,6 @@ import React, { useState } from "react";
 import AuthModal from "../../AuthModal/AuthModal";
 import Reviews from "../../Reviews/Reviews";
 
-
 export default function ProductDetails({ product }: { product: Product }) {
 
     const { isLoggedIn } = useAuth();
