@@ -7,13 +7,9 @@ import { useAuth } from "@/app/src/context/AuthContext";
 import React, { useState } from "react";
 import AuthModal from "../../AuthModal/AuthModal";
 import Reviews from "../../Reviews/Reviews";
-import ProductDetailsSkeleton from "../../Skeleton/ProductDetailsSkeleton/ProductDetailsSkeleton";
-
 
 export default function ProductDetails({ product }: { product: Product }) {
 
-  if (!product) return <ProductDetailsSkeleton />;
-  
     const { isLoggedIn } = useAuth();
     const [showAuthPrompt, setAuthPrompt] = useState(false);
 
