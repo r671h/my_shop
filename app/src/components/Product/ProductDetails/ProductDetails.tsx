@@ -12,6 +12,8 @@ import ProductDetailsSkeleton from "../../Skeleton/ProductDetailsSkeleton/Produc
 
 export default function ProductDetails({ product }: { product: Product }) {
 
+  if (!product) return <ProductDetailsSkeleton />;
+  
     const { isLoggedIn } = useAuth();
     const [showAuthPrompt, setAuthPrompt] = useState(false);
 
@@ -26,8 +28,6 @@ export default function ProductDetails({ product }: { product: Product }) {
     }
     addToCart(product);
   };
-
-  if (!product) return <ProductDetailsSkeleton />;
 
    return (
     <main className={styles.main}>
