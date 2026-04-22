@@ -26,31 +26,25 @@ export default function CartPage() {
 
   return (
     <main className={styles.main}>
-      {/* ── Page Header ─────────────────────────────────── */}
       <div className={styles.header}>
-        <h1 className={styles.title}>Cart</h1>
         <span className={styles.itemCount}>{totalItems} item{totalItems !== 1 ? "s" : ""}</span>
       </div>
 
-      {/* ── Two-column layout ────────────────────────────── */}
       <div className={styles.layout}>
 
         <div className={styles.list}>
           {items.map(({ productId, title, image, price, quantity }) => (
             <div key={productId} className={styles.item}>
 
-              {/* Image */}
               <div className={styles.imageWrap}>
                 <img src={image} alt={title} className={styles.image} />
               </div>
 
-              {/* Info */}
               <div className={styles.info}>
                 <h2 className={styles.name}>{title}</h2>
                 <p className={styles.price}>${price}</p>
               </div>
 
-              {/* Remove */}
               <button
                 className={styles.remove}
                 onClick={() => removeFromCart(productId)}
@@ -59,7 +53,6 @@ export default function CartPage() {
                 ✕
               </button>
 
-              {/* Quantity + Subtotal */}
               <div className={styles.quantityControl}>
                 <span className={styles.subtotal}>
                   Subtotal: <span>${(price * quantity).toFixed(2)}</span>
@@ -85,7 +78,6 @@ export default function CartPage() {
           ))}
         </div>
 
-        {/* ── Summary Card (desktop / tablet) ─────────────── */}
         <aside className={styles.summary}>
           <h2 className={styles.summaryTitle}>Order Summary</h2>
           <div className={styles.summaryRow}>
@@ -110,7 +102,6 @@ export default function CartPage() {
         </aside>
       </div>
 
-      {/* ── Sticky Footer (mobile only) ──────────────────── */}
       <div className={styles.stickyFooter}>
         <div className={styles.stickyTotal}>
           <span>Total</span>
